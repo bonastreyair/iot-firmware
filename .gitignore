@@ -5,6 +5,8 @@ __pycache__/
 dist/
 *.egg-info/
 .idea/
+.pytest_cache/
+build/
 
 # Sphinx documentation
 docs/_build/

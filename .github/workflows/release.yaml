@@ -11,15 +11,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Setup Python
+    - name: Setup Python 3.9
       uses: actions/setup-python@v2
       with:
-        python-version: 3.7
+        python-version: 3.9
         architecture: x64
     - name: Install dependencies
-      run: pip install --upgrade -r requirements.txt setuptools build wheel
+      run: pip install --upgrade setuptools build wheel
     - name: Build pip package
-      run: python -m build .
+      run: python -m build
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
