@@ -1,0 +1,26 @@
+name: Push pip package to release tag
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+    - name: Install dependencies
+      run: pip install --upgrade setuptools build wheel
+    - name: Build pip package
+      run: python -m build
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/*.whl
