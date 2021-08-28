@@ -4,6 +4,10 @@
 
 ### Added
 - Creation of the placeholder repository files
+- Basic CLI
+- Basic Devops workflow
+- Basic Tests
+- Basic Sphinx in gh-pages
 
 All notable changes to this project will be documented in this file.
 
