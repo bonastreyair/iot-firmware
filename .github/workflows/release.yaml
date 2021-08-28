@@ -6,16 +6,11 @@ on:
       - "v*.*.*"
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Setup Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-        architecture: x64
     - name: Install dependencies
       run: pip install --upgrade setuptools build wheel
     - name: Build pip package

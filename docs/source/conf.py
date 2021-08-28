@@ -8,11 +8,13 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import configparser
 import os
 import sys
 
 sys.path.insert(0, os.path.abspath("../.."))
-
+config = configparser.ConfigParser()
+config.read(os.path.dirname(os.path.abspath(__file__)) + "/../../setup.cfg")
 
 # -- Project information -----------------------------------------------------
 
@@ -20,9 +22,8 @@ project = "iot-firmware"
 copyright = "2021, Yair Bonastre"
 author = "Yair Bonastre"
 
-# The full version, including alpha/beta/rc tags
-release = "0.0.1"
-
+# The version from setup.cfg
+release = config["metadata"]["version"]
 
 # -- General configuration ---------------------------------------------------
 
