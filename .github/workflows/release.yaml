@@ -1,4 +1,4 @@
-name: Push pip package to release tag
+name: Release
 
 on:
   push:
