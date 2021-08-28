@@ -3,7 +3,10 @@ name: Documentation
 on:
   push:
     branches:
-      - test_gh_pages
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   documentation:

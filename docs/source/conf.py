@@ -24,6 +24,8 @@ author = "Yair Bonastre"
 
 # The version from setup.cfg
 release = config["metadata"]["version"]
+major, minor, fix = release.split(".")[:3]
+version = f"{major}.{minor}"
 
 # -- General configuration ---------------------------------------------------
 
