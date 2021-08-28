@@ -12,9 +12,10 @@ Welcome to iot-firmware's documentation!
 
    Readme <README.md>
 
+   Package <iot_firmware.rst>
+
    Copyright <copyright.rst>
 
-   Modules <modules.rst>
 
 Indices and tables
 ==================
