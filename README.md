@@ -1,4 +1,4 @@
-# iot-firmware
+# iot-firmware [under development...]
 
 It provides a set of tools to simplify the creation, configuration of and IoT Firmware
 in the most robust and easy way. It uses async for all its operations.
