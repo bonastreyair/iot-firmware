@@ -1,5 +1,7 @@
 # iot-firmware [under development...]
 
+[![codecov](https://codecov.io/gh/bonastreyair/iot-firmware/branch/main/graph/badge.svg?token=9UBYZPCREU)](https://codecov.io/gh/bonastreyair/iot-firmware)
+
 It provides a set of tools to simplify the creation, configuration of and IoT Firmware
 in the most robust and easy way. It uses async for all its operations. It requires Python 3.8+.
 
