@@ -22,7 +22,7 @@ jobs:
       run: pre-commit run --all-files
 
   tests:
-    name: pytest (Python ${{ matrix.python }})
+    name: Tests (Python ${{ matrix.python }})
     runs-on: ubuntu-latest
     needs: pre-commit
     strategy:
