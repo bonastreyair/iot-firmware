@@ -3,7 +3,7 @@ import argparse
 from . import __version__
 
 
-def main():
+def cli():
     parser = argparse.ArgumentParser(
         prog="iot-firmware",
     )
