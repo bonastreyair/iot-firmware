@@ -43,5 +43,5 @@ jobs:
       run: pytest
     - name: Run build docker image
       run: |
-        docker build -t iot-firmware --build-arg PYTHON_VERSION=${{ matrix.python }} .
+        docker build -t iot-firmware --build-arg PYTHON_TAG=${{ matrix.python }}-slim .
         docker run iot-firmware -v
