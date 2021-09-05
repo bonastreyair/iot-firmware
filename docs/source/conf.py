@@ -22,10 +22,10 @@ project = "iot-firmware"
 copyright = "2021, Yair Bonastre"
 author = "Yair Bonastre"
 
-# The version from setup.cfg
+# Get version from setup.cfg
 release = config["metadata"]["version"]
 major, minor, fix = release.split(".")[:3]
-version = f"{major}.{minor}"
+version = f"{major}.{minor}.{fix}"
 
 # -- General configuration ---------------------------------------------------
 
@@ -51,18 +51,15 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
 html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static"]
+html_static_path = []
 
 html_context = {
     "github_user_name": "bonastreyair",
     "github_repo_name": "iot-firmware",
     "project_name": project,
 }
-
-# -- Extension configuration -------------------------------------------------

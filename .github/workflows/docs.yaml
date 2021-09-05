@@ -9,8 +9,7 @@ on:
       - main
 
 jobs:
-  documentation:
-    name: build documentation
+  publish:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
