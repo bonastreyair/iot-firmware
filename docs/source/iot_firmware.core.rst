@@ -11,7 +11,7 @@ Submodules
    :show-inheritance:
 
 
-.. automodule:: iot_firmware.core.task
+.. automodule:: iot_firmware.core.core
    :members:
    :undoc-members:
    :show-inheritance:

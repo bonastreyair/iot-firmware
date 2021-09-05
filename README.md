@@ -14,7 +14,7 @@ pip install iot_firmware
 ## Usage
 
 ```python
-from iot_firmware.firmware import Firmware
+from iot_firmware import Firmware
 
 config = {}
 

@@ -22,7 +22,7 @@ Submodules
    :show-inheritance:
 
 
-.. automodule:: iot_firmware.firmware
+.. automodule:: iot_firmware.iot_firmware
    :members:
    :undoc-members:
    :show-inheritance:
