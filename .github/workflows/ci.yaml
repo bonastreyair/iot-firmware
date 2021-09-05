@@ -41,3 +41,19 @@ jobs:
       run: pip install .[test] --use-feature=in-tree-build
     - name: Run pytest
       run: pytest
+
+  build:
+    name: Build Docker Image (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    needs: pytest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: [ '3.8', '3.9' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Build
+        run: |
+          docker build -t bonastreyair/iot-firmware:latest --build-arg PYTHON_VERSION=${{ matrix.python }} .
+          docker run bonastreyair/iot-firmware -v
