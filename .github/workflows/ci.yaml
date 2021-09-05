@@ -38,10 +38,14 @@ jobs:
         python-version: ${{ matrix.python }}
         architecture: x64
     - name: Install package
-      run: pip install .[test] --use-feature=in-tree-build
+      run: pip install -e .[test]
     - name: Run pytest
       run: pytest
     - name: Run build docker image
       run: |
         docker build -t iot-firmware --build-arg PYTHON_TAG=${{ matrix.python }}-slim .
         docker run iot-firmware -v
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: true
