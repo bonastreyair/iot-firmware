@@ -1,6 +1,6 @@
 import pytest
 
-from iot_firmware.firmware import Firmware
+from iot_firmware import Firmware
 
 
 @pytest.fixture(params=[{}, {"mock_config": "mock"}])

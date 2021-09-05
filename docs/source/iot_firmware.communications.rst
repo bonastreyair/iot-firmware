@@ -5,7 +5,7 @@ Submodules
 ----------
 
 
-.. automodule:: iot_firmware.communications.task
+.. automodule:: iot_firmware.communications.communications
    :members:
    :undoc-members:
    :show-inheritance:

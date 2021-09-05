@@ -4,20 +4,24 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  documentation:
+  publish:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Build HTML docs
-      uses: ammaraskar/sphinx-action@master
+    - name: Setup Python 3.8
+      uses: actions/setup-python@v2
       with:
-        docs-folder: "docs/"
+        python-version: 3.8
+        architecture: x64
+    - name: Install dependencies
+      run: pip install .[docs] --use-feature=in-tree-build
+    - name: Build HTML
+      run: |
+        cd docs
+        make html
     - name: Commit documentation changes
       run: |
         git clone https://github.com/bonastreyair/iot-firmware.git --branch gh-pages --single-branch gh-pages
@@ -27,7 +31,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
-        git commit -m "Update documentation" -a || true
+        git commit -m "update documentation" -a || true
     - name: Push changes to Github Pages
       uses: ad-m/github-push-action@master
       with:

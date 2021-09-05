@@ -4,11 +4,11 @@ from typing import Dict
 
 import uvloop
 
-from .communications.task import communications_task
+from .communications import communications_task
+from .core import core_task
 from .core.config import read_config
-from .core.task import core_task
-from .devices.task import devices_task
-from .monitor.task import events_task
+from .devices import devices_task
+from .monitor import monitor_task
 
 
 class Firmware:
@@ -48,7 +48,9 @@ class Firmware:
 
         # Tasks
         self.core_task = asyncio.create_task(core_task(self))
-        self.event_task = asyncio.create_task(events_task(self.q_events, self.q_send))
+        self.monitor_task = asyncio.create_task(
+            monitor_task(self.q_events, self.q_send)
+        )
         self.devices_task = asyncio.create_task(
             devices_task(
                 self.q_events, self.q_actions, self.q_measurements, self.q_send
@@ -65,7 +67,7 @@ class Firmware:
     def async_tasks(self):
         return [
             self.core_task,
-            self.event_task,
+            self.monitor_task,
             self.devices_task,
             self.communications_task,
         ]

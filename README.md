@@ -5,6 +5,8 @@ in the most robust and easy way. It uses async for all its operations.
 
 It requires Python 3.8+.
 
+[Official Documentation](https://bonastreyair.github.io/iot-firmware/iot_firmware.html)
+
 ## Install
 
 ```shell
@@ -14,7 +16,7 @@ pip install iot_firmware
 ## Usage
 
 ```python
-from iot_firmware.firmware import Firmware
+from iot_firmware import Firmware
 
 config = {}
 

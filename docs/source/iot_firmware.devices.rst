@@ -5,7 +5,7 @@ Submodules
 ----------
 
 
-.. automodule:: iot_firmware.devices.task
+.. automodule:: iot_firmware.devices.devices
    :members:
    :undoc-members:
    :show-inheritance:

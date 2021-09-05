@@ -5,13 +5,7 @@ Submodules
 ----------
 
 
-.. automodule:: iot_firmware.monitor.events
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-.. automodule:: iot_firmware.monitor.task
+.. automodule:: iot_firmware.monitor.monitor
    :members:
    :undoc-members:
    :show-inheritance:
