@@ -21,8 +21,8 @@ jobs:
     - name: Run pre-commit
       run: pre-commit run --all-files
 
-  pytest:
-    name: pytest (Python ${{ matrix.python }})
+  tests:
+    name: tests - Python ${{ matrix.python }}
     runs-on: ubuntu-latest
     needs: pre-commit
     strategy:
@@ -41,3 +41,7 @@ jobs:
       run: pip install .[test] --use-feature=in-tree-build
     - name: Run pytest
       run: pytest
+    - name: Run build docker image
+      run: |
+        docker build -t iot-firmware --build-arg PYTHON_TAG=${{ matrix.python }}-slim .
+        docker run iot-firmware -v
