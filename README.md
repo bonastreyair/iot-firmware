@@ -3,7 +3,7 @@
 It provides a set of tools to simplify the creation, configuration of and IoT Firmware
 in the most robust and easy way. It uses async for all its operations. It requires Python 3.8+.
 
-The [Official Documentation](https://bonastreyair.github.io/iot-firmware/iot_firmware.html) 
+The [Official Documentation](https://bonastreyair.github.io/iot-firmware/iot_firmware.html)
 is being stored using GitHub Pages.
 
 ## Install
@@ -76,7 +76,7 @@ fw.run()
 
 ### Pre-commit
 
-Make sure to run `pre-commit run --all-files` before any `Pull Request`. If you want you can set it up automatically 
+Make sure to run `pre-commit run --all-files` before any `Pull Request`. If you want you can set it up automatically
 in local before any commit with the following command.
 ```shell
 pre-commit install
@@ -84,9 +84,8 @@ pre-commit install
 
 ### Tests
 
-Make sure to run the tests using `pytest`. You can install the package dependencies with the `[test]` option 
+Make sure to run the tests using `pytest`. You can install the package dependencies with the `[test]` option
 so that you can run the test in local.
 ```shell
 pip install -e .[test]
 ```
-
