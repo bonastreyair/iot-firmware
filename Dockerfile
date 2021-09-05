@@ -1,5 +1,5 @@
 ARG PYTHON_VERSION
-FROM python:$PYTHON_VERSION as builder
+FROM python:${PYTHON_VERSION}-slim as builder
 
 COPY setup.cfg setup.py pyproject.toml README.md LICENSE ./
 COPY iot_firmware /iot_firmware
