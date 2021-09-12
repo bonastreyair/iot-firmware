@@ -1,1 +1,1 @@
-from .core import core_task
+from .core import Firmware

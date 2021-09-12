@@ -8,6 +8,7 @@
 - Basic Devops workflow
 - Basic Tests
 - Basic Sphinx in gh-pages
+- Basic API for communications
 
 All notable changes to this project will be documented in this file.
 
