@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 .DS_Store
+.coverage
 
 # Distribution / packaging
 dist/
@@ -8,6 +9,7 @@ dist/
 .idea/
 .pytest_cache/
 build/
+
 
 # Sphinx documentation
 docs/_build/
