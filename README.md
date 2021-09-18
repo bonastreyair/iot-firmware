@@ -45,7 +45,7 @@ iot-firmware -h
 ```
 <details><summary>Output</summary>
 
-```print
+```text
 usage: iot-firmware [-h] [-v] [-c CONFIG]
 
 optional arguments:
@@ -64,7 +64,7 @@ docker run --rm iot-firmware -h
 
 <details><summary>Output</summary>
 
-```print
+```text
 usage: iot-firmware [-h] [-v] [-c CONFIG]
 
 optional arguments:

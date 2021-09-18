@@ -14,6 +14,8 @@ Welcome to iot-firmware's documentation!
 
    Package <iot_firmware.rst>
 
+   Changelog <CHANGELOG.md>
+
    License <LICENSE.md>
 
 
