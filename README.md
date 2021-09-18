@@ -1,4 +1,6 @@
-# iot-firmware [under development...]
+# iot-firmware ![](https://findicons.com/files/icons/42/basic/16/warning.png)
+
+> **WARNING**: Package under development...
 
 [![](https://github.com/bonastreyair/iot-firmware/workflows/CI/badge.svg)](https://github.com/bonastreyair/iot-firmware/actions)
 [![](https://readthedocs.org/projects/iot-firmware/badge/?version=latest)](https://iot-firmware.readthedocs.io/en/latest/?badge=latest)
