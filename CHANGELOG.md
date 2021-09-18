@@ -1,13 +1,14 @@
 # Changelog
 
-## [Unreleased]
+## v0.0.1 [Unreleased]
 
 ### Added
 - Creation of the placeholder repository files
 - Basic CLI
-- Basic Devops workflow
+- Basic Devops Workflow
 - Basic Tests
-- Basic Sphinx in gh-pages
+- Basic Sphinx Documentation in Read The Docs
+- Basic API messages for communications
 
 All notable changes to this project will be documented in this file.
 

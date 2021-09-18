@@ -1,11 +1,14 @@
 import argparse
+from typing import List
+from typing import Optional
 
 from . import __version__
 
 
-def cli():
+def cli(args: Optional[List[str]] = None):
     parser = argparse.ArgumentParser(
         prog="iot-firmware",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
         "-v",
@@ -19,4 +22,4 @@ def cli():
         "--config",
         help="path to the configuration",
     )
-    parser.parse_args()
+    parser.parse_args(args)

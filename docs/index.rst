@@ -14,7 +14,9 @@ Welcome to iot-firmware's documentation!
 
    Package <iot_firmware.rst>
 
-   Copyright <copyright.rst>
+   Changelog <CHANGELOG.md>
+
+   License <LICENSE.md>
 
 
 Indices and tables
