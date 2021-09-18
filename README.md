@@ -9,7 +9,6 @@
 It provides a set of tools to simplify the creation, configuration of and IoT Firmware
 in the most robust and easy way. It uses async for all its operations. It requires Python 3.8+.
 
-
 ## Install
 
 Library can be installed in many ways.
@@ -18,13 +17,15 @@ Library can be installed in many ways.
 
 #### PyPI
 
-```shell
-pip install iot_firmware
+Install the latest pip package from GitHub.
+```sh
+pip install git+ssh://git@github.com/bonastreyair/iot-firmware.git
 ```
 
 #### Local
 
-```shell
+It is required to clone the repo and then install from local.
+```sh
 pip install .
 ```
 
@@ -39,30 +40,28 @@ docker build -t iot-firmware --build-arg PYTHON_TAG=3.8-slim .
 
 ### CLI - Command-line Interface
 
-```text
+```sh
 iot-firmware -h
 
-usage: iot-firmware [-h] [-v] [-c CONFIG]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         show program's version number and exit
-  -c CONFIG, --config CONFIG
-                        path to the configuration
+# usage: iot-firmware [-h] [-v] [-c CONFIG]
+# optional arguments:
+#   -h, --help            show this help message and exit
+#   -v, --version         show program's version number and exit
+#   -c CONFIG, --config CONFIG
+#                         path to the configuration
 ```
 
 ### Docker Image
 
-```text
+```sh
 docker run --rm iot-firmware -h
 
-usage: iot-firmware [-h] [-v] [-c CONFIG]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         show program's version number and exit
-  -c CONFIG, --config CONFIG
-                        path to the configuration
+# usage: iot-firmware [-h] [-v] [-c CONFIG]
+# optional arguments:
+#   -h, --help            show this help message and exit
+#   -v, --version         show program's version number and exit
+#   -c CONFIG, --config CONFIG
+#                         path to the configuration
 ```
 
 ### Python Code
@@ -82,7 +81,7 @@ fw.run()
 
 Make sure to run `pre-commit run --all-files` before any `Pull Request`. If you want you can set it up automatically
 in local before any commit with the following command.
-```shell
+```sh
 pre-commit install
 ```
 
@@ -90,6 +89,20 @@ pre-commit install
 
 Make sure to run the tests using `pytest`. You can install the package dependencies with the `[test]` option
 so that you can run the test in local.
-```shell
-pip install -e .[test]
+```sh
+pip install .[test]
+```
+
+### Docs
+
+To build the docs in local you will need to install the package with the `[docs]` option.
+```sh
+pip install .[docs]
+```
+
+Then you can build it with
+```sh
+cd docs
+make html
+open build/html/index.html
 ```
