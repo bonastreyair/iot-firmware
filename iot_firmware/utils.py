@@ -15,9 +15,6 @@ class StringEnum(str, Enum, metaclass=MetaEnum):
     def __str__(self):
         return "%s" % self.value
 
-    def __repr__(self):
-        return "'%s'" % self.value
-
 
 class MessageType(StringEnum):
     READING = "reading"
