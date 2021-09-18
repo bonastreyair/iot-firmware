@@ -8,40 +8,22 @@ from marshmallow import validate
 
 from ..core.config import get_device_id
 from ..utils import Counter
-from ..utils import StringEnum
+from .enums import MessageType
 
 API_VERSION = [0, 0, 1]
-
-
-class MessageKey(StringEnum):
-    TYPE = "type"
-    DATA = "data"
-
-    ID = "id"
-    TIMESTAMP = "timestamp"
-    API = "api"
-    MSG_ID = "msg_id"
-
-
-class MessageType(StringEnum):
-    READING = "reading"
-    EVENT = "event"
-    COMMAND = "command"
-    ACK = "ack"
-
-
-class CommandType(StringEnum):
-    CONFIG = "config"
-    DEVICE = "device"
-    REBOOT = "reboot"
-
 
 msg_id_counter = Counter()
 
 
 @dataclass
 class Message:
-    type: str = field(metadata={"validate": validate.OneOf(MessageType)})
+    type: str = field(
+        metadata={
+            "required": True,
+            "validate": validate.OneOf(MessageType),
+            "metadata": {"description": "the type of the message"},
+        }
+    )
     data: dict = field()
 
     # Automatic fields
