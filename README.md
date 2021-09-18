@@ -1,12 +1,14 @@
 # iot-firmware [under development...]
 
-[![codecov](https://codecov.io/gh/bonastreyair/iot-firmware/branch/main/graph/badge.svg?token=9UBYZPCREU)](https://codecov.io/gh/bonastreyair/iot-firmware)
+[![CI](https://github.com/bonastreyair/iot-firmware/workflows/CI/badge.svg)](https://github.com/bonastreyair/iot-firmware/actions)
+[![Documentation Status](https://readthedocs.org/projects/iot-firmware/badge/?version=latest)](https://iot-firmware.readthedocs.io/en/latest/?badge=latest)
+[![coverage](https://img.shields.io/codecov/c/github/bonastreyair/iot-firmware/main)](https://codecov.io/gh/bonastreyair/iot-firmware)
+[![code_style](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
+[![license](https://img.shields.io/github/license/bonastreyair/iot-firmware)](https://github.com/bonastreyair/iot-firmware/blob/main/LICENSE)
 
 It provides a set of tools to simplify the creation, configuration of and IoT Firmware
 in the most robust and easy way. It uses async for all its operations. It requires Python 3.8+.
 
-The [Official Documentation](https://bonastreyair.github.io/iot-firmware/iot_firmware.html)
-is being stored using GitHub Pages.
 
 ## Install
 
@@ -23,7 +25,7 @@ pip install iot_firmware
 #### Local
 
 ```shell
-pip install . --use-feature=in-tree-build
+pip install .
 ```
 
 ### Docker Image (Python based)
@@ -37,7 +39,7 @@ docker build -t iot-firmware --build-arg PYTHON_TAG=3.8-slim .
 
 ### CLI - Command-line Interface
 
-```
+```text
 iot-firmware -h
 
 usage: iot-firmware [-h] [-v] [-c CONFIG]
@@ -51,7 +53,7 @@ optional arguments:
 
 ### Docker Image
 
-```
+```text
 docker run --rm iot-firmware -h
 
 usage: iot-firmware [-h] [-v] [-c CONFIG]
@@ -66,7 +68,7 @@ optional arguments:
 ### Python Code
 
 ```python
-from iot_firmware import Firmware
+from iot_firmware.core import Firmware
 
 config = {}
 

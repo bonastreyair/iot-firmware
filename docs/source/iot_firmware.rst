@@ -10,7 +10,7 @@ Subpackages
    iot_firmware.communications
    iot_firmware.core
    iot_firmware.devices
-   iot_firmware.monitor
+   iot_firmware.event
 
 Submodules
 ----------
@@ -22,7 +22,7 @@ Submodules
    :show-inheritance:
 
 
-.. automodule:: iot_firmware.iot_firmware
+.. automodule:: iot_firmware.utils
    :members:
    :undoc-members:
    :show-inheritance:

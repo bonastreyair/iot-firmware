@@ -34,7 +34,6 @@ version = f"{major}.{minor}.{fix}"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.githubpages",
     "recommonmark",
 ]
 

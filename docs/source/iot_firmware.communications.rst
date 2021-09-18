@@ -5,6 +5,12 @@ Submodules
 ----------
 
 
+.. automodule:: iot_firmware.communications.API
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: iot_firmware.communications.communications
    :members:
    :undoc-members:
