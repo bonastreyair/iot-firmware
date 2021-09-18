@@ -12,9 +12,9 @@ import configparser
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../.."))
+sys.path.insert(0, os.path.abspath("."))
 config = configparser.ConfigParser()
-config.read(os.path.dirname(os.path.abspath(__file__)) + "/../../setup.cfg")
+config.read(os.path.dirname(os.path.abspath(__file__)) + "/../setup.cfg")
 
 # -- Project information -----------------------------------------------------
 
@@ -34,7 +34,7 @@ version = f"{major}.{minor}.{fix}"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
-    "recommonmark",
+    "myst_parser",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
