@@ -42,27 +42,38 @@ docker build -t iot-firmware --build-arg PYTHON_TAG=3.8-slim .
 
 ```sh
 iot-firmware -h
-
-# usage: iot-firmware [-h] [-v] [-c CONFIG]
-# optional arguments:
-#   -h, --help            show this help message and exit
-#   -v, --version         show program's version number and exit
-#   -c CONFIG, --config CONFIG
-#                         path to the configuration
 ```
+<details><summary>Output</summary>
+
+```print
+usage: iot-firmware [-h] [-v] [-c CONFIG]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  -c CONFIG, --config CONFIG
+                        path to the configuration
+```
+</details>
 
 ### Docker Image
 
 ```sh
 docker run --rm iot-firmware -h
-
-# usage: iot-firmware [-h] [-v] [-c CONFIG]
-# optional arguments:
-#   -h, --help            show this help message and exit
-#   -v, --version         show program's version number and exit
-#   -c CONFIG, --config CONFIG
-#                         path to the configuration
 ```
+
+<details><summary>Output</summary>
+
+```print
+usage: iot-firmware [-h] [-v] [-c CONFIG]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  -c CONFIG, --config CONFIG
+                        path to the configuration
+```
+</details>
 
 ### Python Code
 
