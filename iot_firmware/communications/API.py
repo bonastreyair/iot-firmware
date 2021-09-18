@@ -7,8 +7,8 @@ import marshmallow_dataclass
 from marshmallow import validate
 
 from ..core.config import get_device_id
+from ..enums import MessageType
 from ..utils import Counter
-from .enums import MessageType
 
 API_VERSION = [0, 0, 1]
 

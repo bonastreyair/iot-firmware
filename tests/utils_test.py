@@ -1,6 +1,6 @@
 from enum import Enum
 
-from iot_firmware.utils import MetaEnum
+from iot_firmware.enums import MetaEnum
 
 
 def test_meta_enum():

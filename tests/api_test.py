@@ -3,8 +3,8 @@ from marshmallow import ValidationError
 
 from iot_firmware.communications.API import API_VERSION
 from iot_firmware.communications.API import load_message
-from iot_firmware.communications.API import MessageType
-from iot_firmware.communications.enums import MessageKey
+from iot_firmware.enums import MessageKey
+from iot_firmware.enums import MessageType
 
 
 def test_load_message():

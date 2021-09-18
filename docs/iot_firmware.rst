@@ -22,6 +22,12 @@ Submodules
    :show-inheritance:
 
 
+.. automodule:: iot_firmware.enums
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 .. automodule:: iot_firmware.utils
    :members:
    :undoc-members:
