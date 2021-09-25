@@ -46,3 +46,12 @@ repos:
   rev: 0.7.10
   hooks:
   - id: mdformat
+    name: Format Markdown files
+- repo: local
+  hooks:
+  - id: pyreverse
+    name: Generate UML diagrams
+    entry: pyreverse
+    args: [iot_firmware, -o, png, -d, docs]
+    language: system
+    pass_filenames: false

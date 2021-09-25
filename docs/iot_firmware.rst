@@ -1,6 +1,8 @@
 iot\_firmware package
 =====================
 
+.. image:: classes.png
+
 Subpackages
 -----------
 

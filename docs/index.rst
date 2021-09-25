@@ -6,6 +6,8 @@
 Welcome to iot-firmware's documentation!
 ========================================
 
+.. image:: packages.png
+
 .. toctree::
    :maxdepth: 3
    :caption: Contents:

@@ -10,6 +10,7 @@
 #
 import configparser
 import os
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.abspath("."))
@@ -45,7 +46,6 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -62,3 +62,6 @@ html_context = {
     "github_repo_name": "iot-firmware",
     "project_name": project,
 }
+
+# -- Generate diagrams -------------------------------------------------
+subprocess.run(["pyreverse", "../iot_firmware", "-o", "png"])
