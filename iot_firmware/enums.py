@@ -37,3 +37,6 @@ class CommandType(StringEnum):
     CONFIG = "config"
     DEVICE = "device"
     REBOOT = "reboot"
+
+
+TIME_FORMAT = "%Y-%m-%d %H:%M:%S"

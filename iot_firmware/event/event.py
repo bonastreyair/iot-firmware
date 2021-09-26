@@ -1,13 +1,28 @@
-import asyncio
-from enum import Enum
+import uuid
+
+from .core import Event
+from .core import EventType
 
 
-async def event_task(q_event, q_send):
-    await asyncio.sleep(1)
+# Event Types
+class ReadingEventType(EventType):
+    uuid = uuid.uuid4()
+
+    def __init__(self):
+        super().__init__(name="reading")
 
 
-class EventTypes(Enum):
-    THRESHOLD = "threshold"
+class CommandEventType(EventType):
+    uuid = uuid.uuid4()
 
-    WARNING = "warning"
-    ERROR = "error"
+    def __init__(self):
+        super().__init__(name="command")
+
+
+# Events
+class ReadingEvent(Event):
+    type = ReadingEventType()
+
+
+class CommandEvent(Event):
+    type = CommandEventType()
