@@ -116,6 +116,7 @@ Then you can build it with
 
 ```sh
 cd docs
+python generate_graphs.py
 make html
 open build/html/index.html
 ```
