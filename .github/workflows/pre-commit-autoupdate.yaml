@@ -5,6 +5,8 @@ on:
   # check every friday at midnight
   schedule:
   - cron: 0 0 * * 5
+  # on demand
+  workflow_dispatch:
 
 jobs:
   auto-update:
