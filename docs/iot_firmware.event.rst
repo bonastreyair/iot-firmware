@@ -1,7 +1,7 @@
 iot\_firmware.event
 ===================
 
-.. graphviz:: event/classes.dot
+.. graphviz:: classes_event.dot
 
 |
 

@@ -4,7 +4,9 @@ import uuid
 
 class EventTypeMeta(abc.ABCMeta, type):
     """Meta class for event types.
-    It generates a uuid for each unique event type class."""
+
+    It generates a uuid for each unique event type class.
+    """
 
     def __init__(cls, what, bases, dct):
         super().__init__(what, bases, dct)

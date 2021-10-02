@@ -14,17 +14,19 @@ class EventHandler:
 
     @property
     def subscribers(self) -> Dict[str, set]:
-        """Returns the dict of all the subscribers"""
+        """Returns the dict of all the subscribers."""
         return self.__subscribers
 
     def subscribe(self, event: Type[Event], fn: Callable) -> None:
-        """Subscribes a function to an EventType to be handled by the EventHandler."""
+        """Subscribes a function to an EventType to be handled by the
+        EventHandler."""
         if not isinstance(fn, Callable):
             raise TypeError(f"function {fn} is not Callable")
         self.__subscribers[event.type.uuid].add(fn)
 
     def unsubscribe(self, event: Type[Event], fn: Callable) -> None:
-        """Unsubscribe a function to an EventType to be handled by the EventHandler."""
+        """Unsubscribe a function to an EventType to be handled by the
+        EventHandler."""
         if event.type.uuid not in self.__subscribers:
             logging.error(f"event type {event.type.name} was never subscribed")
             return

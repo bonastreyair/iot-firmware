@@ -66,4 +66,4 @@ html_context = {
 
 # -- Generate diagrams -------------------------------------------------
 subprocess.run(["pyreverse", "../iot_firmware"])
-subprocess.run(["pyreverse", "../iot_firmware/event", "-d", "event"])
+subprocess.run(["pyreverse", "../iot_firmware/event", "-p", "event"])
