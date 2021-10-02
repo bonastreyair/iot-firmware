@@ -18,33 +18,38 @@ def event(request):
     return request.param
 
 
-def test_event_bus_add_subscriber(event):
+def test_event_handler_subscribe(event):
     event_bus = EventHandler()
     event_bus.subscribe(event, mock_function)
     assert event.type.uuid in event_bus.subscribers
 
 
-def test_event_bus_add_bad_subscriber():
+def test_event_handler_add_bad_subscription():
     event_bus = EventHandler()
     with pytest.raises(TypeError):
         event_bus.subscribe(MockEvent, None)
 
 
-def test_event_bus_remove_subscriber():
+def test_event_handler_unsubscribe():
     event_bus = EventHandler()
     event_bus.subscribe(MockEvent, mock_function)
     event_bus.unsubscribe(MockEvent, mock_function)
     assert MockEvent.type.uuid not in event_bus.subscribers
 
 
-def test_event_bus_publish_with_subscribers():
+def test_event_handler_bad_unsubscribe():
+    event_bus = EventHandler()
+    event_bus.unsubscribe(MockEvent, mock_function)
+
+
+def test_event_handler_publish_with_subscribers():
     mock_event = MockEvent()
     event_bus = EventHandler()
     event_bus.subscribe(MockEvent, mock_function)
     event_bus.publish(mock_event)
 
 
-def test_event_bus_publish_without_subscribers():
+def test_event_handler_publish_without_subscribers():
     mock_event = MockEvent()
     event_bus = EventHandler()
     event_bus.publish(mock_event)
