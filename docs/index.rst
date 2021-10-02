@@ -1,15 +1,13 @@
 Welcome to iot-firmware's documentation!
 ========================================
 
-.. graphviz:: packages.dot
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    Readme <README.md>
 
-   Package <iot_firmware.rst>
+   iot-firmware <iot_firmware.rst>
 
    Changelog <CHANGELOG.md>
 
