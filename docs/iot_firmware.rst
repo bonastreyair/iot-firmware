@@ -1,7 +1,7 @@
 iot\_firmware package
 =====================
 
-.. image:: classes.png
+.. graphviz:: classes.dot
 
 Subpackages
 -----------

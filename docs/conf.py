@@ -35,6 +35,7 @@ version = f"{major}.{minor}.{fix}"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.graphviz",
     "myst_parser",
 ]
 
@@ -64,4 +65,4 @@ html_context = {
 }
 
 # -- Generate diagrams -------------------------------------------------
-subprocess.run(["pyreverse", "../iot_firmware", "-o", "png"])
+subprocess.run(["pyreverse", "../iot_firmware"])
