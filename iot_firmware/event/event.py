@@ -23,9 +23,9 @@ class Event(abc.ABC):
         """Event Type. Must be defined."""
 
     @property
+    @abc.abstractmethod
     def name(self) -> str:
-        """Name of the Event. Defaults the name of the event type."""
-        return self.type.name
+        """Name of the Event. Must be defined."""
 
     def __post_init__(self) -> None:
         """Every event will have a universally unique identifier
