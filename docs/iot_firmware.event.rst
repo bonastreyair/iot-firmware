@@ -23,3 +23,10 @@ Logic
 .. automodule:: iot_firmware.event.handler
    :members:
    :undoc-members:
+
+Diagram
+-------
+
+.. graphviz:: graphs/packages_event.dot
+
+|

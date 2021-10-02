@@ -1,14 +1,15 @@
-iot\_firmware package
-=====================
+iot\_firmware
+=============
 
-.. graphviz:: graphs/classes.dot
-
-|
-
-Packages
---------
+Modules
+-------
 
 .. toctree::
    :maxdepth: 2
 
    iot_firmware.event <iot_firmware.event.rst>
+
+Diagram
+-------
+
+.. graphviz:: graphs/packages.dot

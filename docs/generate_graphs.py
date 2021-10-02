@@ -1,7 +1,7 @@
 import subprocess
 
 
-def main():
+def generate_graphs():
     subprocess.run(["pyreverse", "../iot_firmware", "-d", "graphs"])
     subprocess.run(
         ["pyreverse", "../iot_firmware/event", "-d", "graphs", "-p", "event"]
@@ -9,4 +9,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    generate_graphs()
