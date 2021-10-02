@@ -20,6 +20,4 @@ jobs:
         title: update pre-commit hooks
         commit-message: update pre-commit hooks
         body: Update versions of pre-commit hooks to latest version
-        labels:
-        - dependencies
-        - github_actions
+        labels: dependencies,github_actions
