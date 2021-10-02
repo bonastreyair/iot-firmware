@@ -11,19 +11,19 @@ class MetaEnum(EnumMeta):
         return True
 
 
-class StringEnum(str, Enum, metaclass=MetaEnum):
+class StrEnum(str, Enum, metaclass=MetaEnum):
     def __str__(self):
         return "%s" % self.value
 
 
-class MessageType(StringEnum):
+class MessageType(StrEnum):
     READING = "reading"
     EVENT = "event"
     COMMAND = "command"
     ACK = "ack"
 
 
-class MessageKey(StringEnum):
+class MessageKey(StrEnum):
     TYPE = "type"
     DATA = "data"
 
@@ -33,7 +33,10 @@ class MessageKey(StringEnum):
     MSG_ID = "msg_id"
 
 
-class CommandType(StringEnum):
+class CommandType(StrEnum):
     CONFIG = "config"
     DEVICE = "device"
     REBOOT = "reboot"
+
+
+TIME_FORMAT = "%Y-%m-%d %H:%M:%S"

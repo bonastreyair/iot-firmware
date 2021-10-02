@@ -6,7 +6,6 @@ import uvloop
 
 from ..communications import communications_task
 from ..devices import devices_task
-from ..event import event_task
 from .config import read_config
 
 
@@ -49,9 +48,6 @@ class Firmware:
         self.core_task = asyncio.create_task(
             self.core_task(),
         )
-        self.event_task = asyncio.create_task(
-            event_task(self.q_event, self.q_send),
-        )
         self.devices_task = asyncio.create_task(
             devices_task(
                 self.q_event,
@@ -70,7 +66,6 @@ class Firmware:
     def async_tasks(self):
         return [
             self.core_task,
-            self.event_task,
             self.devices_task,
             self.communications_task,
         ]
