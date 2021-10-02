@@ -10,7 +10,6 @@
 #
 import configparser
 import os
-import subprocess
 import sys
 
 sys.path.insert(0, os.path.abspath("."))
@@ -63,7 +62,3 @@ html_context = {
     "github_repo_name": "iot-firmware",
     "project_name": project,
 }
-
-# -- Generate diagrams -------------------------------------------------
-subprocess.run(["pyreverse", "../iot_firmware"])
-subprocess.run(["pyreverse", "../iot_firmware/event", "-p", "event"])

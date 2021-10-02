@@ -1,7 +1,7 @@
 iot\_firmware package
 =====================
 
-.. graphviz:: classes.dot
+.. graphviz:: graphs/classes.dot
 
 |
 

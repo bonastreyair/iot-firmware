@@ -1,0 +1,42 @@
+digraph "packages" {
+rankdir=BT
+charset="utf-8"
+"iot_firmware" [color="black", label="iot_firmware", shape="box", style="solid"];
+"iot_firmware.cli" [color="black", label="iot_firmware.cli", shape="box", style="solid"];
+"iot_firmware.communications" [color="black", label="iot_firmware.communications", shape="box", style="solid"];
+"iot_firmware.communications.API" [color="black", label="iot_firmware.communications.API", shape="box", style="solid"];
+"iot_firmware.communications.communications" [color="black", label="iot_firmware.communications.communications", shape="box", style="solid"];
+"iot_firmware.core" [color="black", label="iot_firmware.core", shape="box", style="solid"];
+"iot_firmware.core.config" [color="black", label="iot_firmware.core.config", shape="box", style="solid"];
+"iot_firmware.core.core" [color="black", label="iot_firmware.core.core", shape="box", style="solid"];
+"iot_firmware.devices" [color="black", label="iot_firmware.devices", shape="box", style="solid"];
+"iot_firmware.devices.devices" [color="black", label="iot_firmware.devices.devices", shape="box", style="solid"];
+"iot_firmware.enums" [color="black", label="iot_firmware.enums", shape="box", style="solid"];
+"iot_firmware.event" [color="black", label="iot_firmware.event", shape="box", style="solid"];
+"iot_firmware.event.async_event" [color="black", label="iot_firmware.event.async_event", shape="box", style="solid"];
+"iot_firmware.event.basic" [color="black", label="iot_firmware.event.basic", shape="box", style="solid"];
+"iot_firmware.event.basic.event" [color="black", label="iot_firmware.event.basic.event", shape="box", style="solid"];
+"iot_firmware.event.basic.type" [color="black", label="iot_firmware.event.basic.type", shape="box", style="solid"];
+"iot_firmware.event.enum" [color="black", label="iot_firmware.event.enum", shape="box", style="solid"];
+"iot_firmware.event.event" [color="black", label="iot_firmware.event.event", shape="box", style="solid"];
+"iot_firmware.event.handler" [color="black", label="iot_firmware.event.handler", shape="box", style="solid"];
+"iot_firmware.event.type" [color="black", label="iot_firmware.event.type", shape="box", style="solid"];
+"iot_firmware.utils" [color="black", label="iot_firmware.utils", shape="box", style="solid"];
+"iot_firmware.communications" -> "iot_firmware.communications" [arrowhead="open", arrowtail="none"];
+"iot_firmware.core" -> "iot_firmware.core" [arrowhead="open", arrowtail="none"];
+"iot_firmware.core.core" -> "iot_firmware.core.config" [arrowhead="open", arrowtail="none"];
+"iot_firmware.devices" -> "iot_firmware.devices" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event" -> "iot_firmware.event.event" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event" -> "iot_firmware.event.handler" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event" -> "iot_firmware.event.type" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.async_event" -> "iot_firmware.event.handler" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.basic" -> "iot_firmware.event.event" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.basic.event" -> "iot_firmware.event.basic.event" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.basic.event" -> "iot_firmware.event.basic.type" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.basic.type" -> "iot_firmware.event.basic.type" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.enum" -> "iot_firmware.event.enum" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.event" -> "iot_firmware.enums" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.event" -> "iot_firmware.event.enum" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.event" -> "iot_firmware.event.type" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.handler" -> "iot_firmware.event.event" [arrowhead="open", arrowtail="none"];
+}
