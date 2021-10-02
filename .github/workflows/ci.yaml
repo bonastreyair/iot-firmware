@@ -49,5 +49,5 @@ jobs:
       uses: codecov/codecov-action@v2.1.0
       with:
         files: .coverage
-        working-directory: /home/runner/work/iot-firmware/iot-firmware/
+        root_dir: /home/runner/work/iot-firmware/iot-firmware/
         fail_ci_if_error: true
