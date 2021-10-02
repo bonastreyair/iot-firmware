@@ -2,12 +2,13 @@
 
 > **WARNING**: Package under development...
 
-[![](https://img.shields.io/github/workflow/status/bonastreyair/iot-firmware/CI?label=CI&logo=github&style=flat-square)](https://github.com/bonastreyair/iot-firmware/actions?workflow=CI)
-[![](https://img.shields.io/readthedocs/iot-firmware/latest?logo=readthedocs&style=flat-square)](https://iot-firmware.readthedocs.io/en/latest/)
-[![](https://img.shields.io/codecov/c/github/bonastreyair/iot-firmware/main?style=flat-square&logo=codecov)](https://codecov.io/gh/bonastreyair/iot-firmware)
-[![](https://img.shields.io/codeclimate/maintainability/bonastreyair/iot-firmware?logo=codeclimate&style=flat-square)](https://codeclimate.com/github/bonastreyair/iot-firmware/maintainability)
-[![](https://img.shields.io/badge/code%20style-black-black?style=flat-square)](https://github.com/psf/black)
-[![](https://img.shields.io/github/license/bonastreyair/iot-firmware?style=flat-square&color=blue)](https://github.com/bonastreyair/iot-firmware/blob/main/LICENSE)
+[![](https://img.shields.io/readthedocs/iot-firmware/latest?logo=readthedocs)](https://iot-firmware.readthedocs.io/en/latest/)
+[![](https://results.pre-commit.ci/badge/github/bonastreyair/iot-firmware/main.svg)](https://results.pre-commit.ci/latest/github/bonastreyair/iot-firmware/main)
+[![](https://img.shields.io/github/workflow/status/bonastreyair/iot-firmware/CI?label=CI&logo=github)](https://github.com/bonastreyair/iot-firmware/actions?workflow=CI)
+[![](https://img.shields.io/codecov/c/github/bonastreyair/iot-firmware/main?logo=codecov)](https://codecov.io/gh/bonastreyair/iot-firmware)
+[![](https://img.shields.io/codeclimate/maintainability/bonastreyair/iot-firmware?logo=codeclimate)](https://codeclimate.com/github/bonastreyair/iot-firmware/maintainability)
+[![](https://img.shields.io/badge/code%20style-black-black)](https://github.com/psf/black)
+[![](https://img.shields.io/github/license/bonastreyair/iot-firmware?color=blue)](https://github.com/bonastreyair/iot-firmware/blob/main/LICENSE)
 
 It provides a set of tools to simplify the creation, configuration of and IoT Firmware
 in the most robust and easy way. It uses async for all its operations. It requires Python 3.8+.
@@ -115,6 +116,7 @@ Then you can build it with
 
 ```sh
 cd docs
+python generate_graphs.py
 make html
 open build/html/index.html
 ```

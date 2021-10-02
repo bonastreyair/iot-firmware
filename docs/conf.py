@@ -34,6 +34,7 @@ version = f"{major}.{minor}.{fix}"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.graphviz",
     "myst_parser",
 ]
 
@@ -44,7 +45,6 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
-
 
 # -- Options for HTML output -------------------------------------------------
 
