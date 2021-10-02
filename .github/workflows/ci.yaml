@@ -48,5 +48,6 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2.1.0
       with:
-        files: /home/runner/work/iot-firmware/iot-firmware/.coverage
+        files: .coverage
+        working-directory: /home/runner/work/iot-firmware/iot-firmware/
         fail_ci_if_error: true
