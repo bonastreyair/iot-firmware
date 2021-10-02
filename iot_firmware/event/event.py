@@ -1,28 +1,48 @@
+import abc
+import time
 import uuid
+from dataclasses import dataclass
+from typing import Any
 
-from .core import Event
-from .core import EventType
-
-
-# Event Types
-class ReadingEventType(EventType):
-    uuid = uuid.uuid4()
-
-    def __init__(self):
-        super().__init__(name="reading")
+from .enum import EventLevel
+from .type import EventType
+from iot_firmware.enums import TIME_FORMAT
 
 
-class CommandEventType(EventType):
-    uuid = uuid.uuid4()
+@dataclass
+class Event(abc.ABC):
+    """Abstract class for any Event class.
+    It contain a custom name and any data as well as a level of an event (default is INFO)."""
 
-    def __init__(self):
-        super().__init__(name="command")
+    data: Any = None
+    level: EventLevel = EventLevel.INFO
 
+    @property
+    @abc.abstractmethod
+    def type(self) -> EventType:
+        """Event Type. Must be defined."""
 
-# Events
-class ReadingEvent(Event):
-    type = ReadingEventType()
+    @property
+    def name(self) -> str:
+        """Name of the Event. Defaults the name of the event type."""
+        return self.type.name
 
+    def __post_init__(self) -> None:
+        """Every event will have a universally unique identifier
+        as well as an timestamp of the event."""
+        self.__uuid = str(uuid.uuid4())
+        self.__timestamp = time.time()
 
-class CommandEvent(Event):
-    type = CommandEventType()
+    @property
+    def uuid(self) -> str:
+        """Universally unique identifier of the event"""
+        return self.__uuid
+
+    @property
+    def timestamp(self) -> float:
+        """Timestamp of the event"""
+        return self.__timestamp
+
+    def __repr__(self) -> str:
+        time_format = time.strftime(TIME_FORMAT, time.gmtime(self.timestamp))
+        return f"{self.level.name}: {time_format} [{self.name} {self.type.name} EVENT]: {self.data}"

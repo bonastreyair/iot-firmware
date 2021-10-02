@@ -1,10 +1,16 @@
-from enum import auto
+import logging
 from enum import Enum
+from enum import IntEnum
 
 
-class EventLevel(Enum):
-    DEBUG = auto()
-    INFO = auto()
-    WARNING = auto()
-    ERROR = auto()
-    CRITICAL = auto()
+class EventLevel(IntEnum):
+    DEBUG = logging.DEBUG
+    INFO = logging.INFO
+    WARNING = logging.WARNING
+    ERROR = logging.ERROR
+    CRITICAL = logging.CRITICAL
+
+
+class EventTypeName(Enum):
+    READING = "reading"
+    COMMAND = "command"

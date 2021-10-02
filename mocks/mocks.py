@@ -1,12 +1,14 @@
-from iot_firmware.event.core import Event
-from iot_firmware.event.core import EventType
+from iot_firmware.event import Event
+from iot_firmware.event import EventType
+
+
+class MockEventType(EventType):
+    name: str = "mock_event_type"
 
 
 class MockEvent(Event):
-    type: EventType = EventType("mock_event_type")
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(name="mock_event", *args, **kwargs)
+    name: str = "mock_event"
+    type: EventType = MockEventType
 
 
 def mock_function(event: MockEvent):

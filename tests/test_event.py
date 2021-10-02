@@ -1,11 +1,16 @@
+import uuid
+
 import pytest
 
-from iot_firmware.event import CommandEvent
-from iot_firmware.event import ReadingEvent
-from iot_firmware.event.core import EventHandler
+from iot_firmware.event import Event
+from iot_firmware.event import EventHandler
+from iot_firmware.event import EventType
+from iot_firmware.event.basic import CommandEvent
+from iot_firmware.event.basic import ReadingEvent
 from iot_firmware.event.enum import EventLevel
 from mocks.mocks import mock_function
 from mocks.mocks import MockEvent
+from mocks.mocks import MockEventType
 
 
 @pytest.fixture(params=[CommandEvent, ReadingEvent])
@@ -15,27 +20,27 @@ def event(request):
 
 def test_event_bus_add_subscriber(event):
     event_bus = EventHandler()
-    event_bus.add_subscriber(event, mock_function)
+    event_bus.subscribe(event, mock_function)
     assert event.type.uuid in event_bus.subscribers
 
 
 def test_event_bus_add_bad_subscriber():
     event_bus = EventHandler()
     with pytest.raises(TypeError):
-        event_bus.add_subscriber(MockEvent, None)
+        event_bus.subscribe(MockEvent, None)
 
 
 def test_event_bus_remove_subscriber():
     event_bus = EventHandler()
-    event_bus.add_subscriber(MockEvent, mock_function)
-    event_bus.remove_subscriber(MockEvent, mock_function)
+    event_bus.subscribe(MockEvent, mock_function)
+    event_bus.unsubscribe(MockEvent, mock_function)
     assert MockEvent.type.uuid not in event_bus.subscribers
 
 
 def test_event_bus_publish_with_subscribers():
     mock_event = MockEvent()
     event_bus = EventHandler()
-    event_bus.add_subscriber(MockEvent, mock_function)
+    event_bus.subscribe(MockEvent, mock_function)
     event_bus.publish(mock_event)
 
 
@@ -82,3 +87,44 @@ def test_print_event():
 def test_print_event_type():
     mock_event = MockEvent()
     print(mock_event.type)
+
+
+def test_event_type_class():
+    class FooEventType(EventType):
+        name: str = "foo_event_type"
+
+    assert FooEventType.name == "foo_event_type"
+    assert isinstance(FooEventType.uuid, str)
+    assert FooEventType.uuid != ""
+    assert len(FooEventType.uuid) == len(str(uuid.uuid4()))
+
+    class BarEventType(EventType):
+        name: str = "bar_event_type"
+
+    assert FooEventType.uuid != BarEventType.uuid
+
+
+def test_event_class():
+    class FooEvent(Event):
+        name: str = "foo_event"
+        type: EventType = MockEventType
+
+    foo = FooEvent()
+
+    assert FooEvent.type.uuid is foo.type.uuid
+    assert FooEvent.name is foo.name
+    assert FooEvent.name == "foo_event"
+    assert isinstance(foo.uuid, str)
+    assert isinstance(foo.timestamp, float)
+
+    new_foo = FooEvent()
+
+    assert new_foo.uuid != foo.uuid
+
+    class BarEvent(Event):
+        name: str = "bar_event"
+        type: EventType = MockEventType
+
+    bar = BarEvent()
+
+    assert foo.uuid != bar.uuid
