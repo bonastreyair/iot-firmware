@@ -2,7 +2,7 @@ digraph "classes_event" {
 rankdir=BT
 charset="utf-8"
 "iot_firmware.event.event.Event" [color="black", fontcolor="black", label="{Event|data : Optional[Any]\llevel\lname : str\ltimestamp : float\ltype\luuid : str\l|}", shape="record", style="solid"];
-"iot_firmware.event.handler.EventHandler" [color="black", fontcolor="black", label="{EventHandler|subscribers\l|publish(event: Event)\lsubscribe(event_class: Type[Event], fn: Callable): \lunsubscribe(event_class: Type[Event], fn: Callable): \l}", shape="record", style="solid"];
+"iot_firmware.event.handler.EventHandler" [color="black", fontcolor="black", label="{EventHandler|subscribers : Dict[str, set]\l|publish(event: Event): \lsubscribe(event_class: Type[Event], fn: Callable): \lunsubscribe(event_class: Type[Event], fn: Callable): \l}", shape="record", style="solid"];
 "iot_firmware.event.enum.EventLevel" [color="black", fontcolor="black", label="{EventLevel|name\l|}", shape="record", style="solid"];
 "iot_firmware.event.type.EventType" [color="black", fontcolor="black", label="{EventType|name : str\luuid : str\l|}", shape="record", style="solid"];
 "iot_firmware.event.type.EventTypeMeta" [color="black", fontcolor="black", label="{EventTypeMeta|\l|}", shape="record", style="solid"];

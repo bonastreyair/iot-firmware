@@ -8,7 +8,7 @@ class EventTypeMeta(abc.ABCMeta, type):
     It generates a uuid for each unique event type class.
     """
 
-    def __init__(cls, what, bases, dct):
+    def __init__(cls, what, bases, dct) -> None:
         super().__init__(what, bases, dct)
         cls.uuid: str = str(uuid.uuid4())
 

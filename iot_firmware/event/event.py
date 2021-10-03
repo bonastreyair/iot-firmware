@@ -19,7 +19,7 @@ class Event(abc.ABC):
     uuid: str
     timestamp: float
 
-    def __init__(self, data: Any = None, level: EventLevel = EventLevel.INFO):
+    def __init__(self, data: Any = None, level: EventLevel = EventLevel.INFO) -> None:
         self.data = data
         self.level = level
         self.__post_init__()

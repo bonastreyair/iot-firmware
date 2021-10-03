@@ -9,9 +9,9 @@ from .event import Event
 
 
 class EventHandler:
-    __subscribers: Dict[str, set]
+    subscribers: Dict[str, set]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.__subscribers = defaultdict(set)
 
     @property
@@ -36,7 +36,7 @@ class EventHandler:
         if len(self.__subscribers[event_class.type.uuid]) == 0:
             del self.__subscribers[event_class.type.uuid]
 
-    def publish(self, event: Event):
+    def publish(self, event: Event) -> None:
         logging.debug(event)
         if event.type.uuid not in self.__subscribers:
             return
