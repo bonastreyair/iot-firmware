@@ -1,11 +1,11 @@
 import argparse
 from typing import List
-from typing import Optional
 
 from . import __version__
 
 
-def cli(args: Optional[List[str]] = None):
+def cli(args: List[str] = None):
+    """Basic CLI."""
     parser = argparse.ArgumentParser(
         prog="iot-firmware",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,

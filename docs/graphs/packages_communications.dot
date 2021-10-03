@@ -1,0 +1,11 @@
+digraph "packages_communications" {
+rankdir=BT
+charset="utf-8"
+"iot_firmware.communications" [color="black", label="iot_firmware.communications", shape="box", style="solid"];
+"iot_firmware.communications.handler" [color="black", label="iot_firmware.communications.handler", shape="box", style="solid"];
+"iot_firmware.communications.schema" [color="black", label="iot_firmware.communications.schema", shape="box", style="solid"];
+"iot_firmware.communications.utils" [color="black", label="iot_firmware.communications.utils", shape="box", style="solid"];
+"iot_firmware.communications" -> "iot_firmware.communications.handler" [arrowhead="open", arrowtail="none"];
+"iot_firmware.communications.handler" -> "iot_firmware.communications.schema" [arrowhead="open", arrowtail="none"];
+"iot_firmware.communications.schema" -> "iot_firmware.communications.utils" [arrowhead="open", arrowtail="none"];
+}

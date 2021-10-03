@@ -1,3 +1,4 @@
-from .event import Event
+"""Package that handles all events that happen in the firmware."""
 from .handler import EventHandler
-from .type import EventType
+from .schema import Event
+from .schema import EventType

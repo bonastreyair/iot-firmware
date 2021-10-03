@@ -1,1 +1,2 @@
-from .communications import communications_task
+"""Package that handles all messages from external communications."""
+from .handler import CommunicationsHandler

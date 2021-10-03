@@ -7,11 +7,13 @@
 
 |
 
-.. autosummary::
-    :toctree: ./generated
+Modules
+-------
 
-    iot_firmware.event.event test
-    iot_firmware.event.type
+.. autosummary::
+    :toctree: ./autosummary
+
+    iot_firmware.event.schema
     iot_firmware.event.handler
     iot_firmware.event.enum
 
