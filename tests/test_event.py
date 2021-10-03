@@ -5,54 +5,52 @@ import pytest
 from iot_firmware.event import Event
 from iot_firmware.event import EventHandler
 from iot_firmware.event import EventType
-from iot_firmware.event.basic import CommandEvent
-from iot_firmware.event.basic import ReadingEvent
 from iot_firmware.event.enum import EventLevel
 from mocks.mocks import mock_function
 from mocks.mocks import MockEvent
 from mocks.mocks import MockEventType
 
 
-@pytest.fixture(params=[CommandEvent, ReadingEvent])
+@pytest.fixture(params=[MockEvent])
 def event(request):
     return request.param
 
 
 def test_event_handler_subscribe(event):
-    event_bus = EventHandler()
-    event_bus.subscribe(event, mock_function)
-    assert event.type.uuid in event_bus.subscribers
+    event_handler = EventHandler()
+    event_handler.subscribe(event, mock_function)
+    assert event.type.uuid in event_handler.subscribers
 
 
 def test_event_handler_add_bad_subscription():
-    event_bus = EventHandler()
+    event_handler = EventHandler()
     with pytest.raises(TypeError):
-        event_bus.subscribe(MockEvent, None)
+        event_handler.subscribe(MockEvent, None)
 
 
 def test_event_handler_unsubscribe():
-    event_bus = EventHandler()
-    event_bus.subscribe(MockEvent, mock_function)
-    event_bus.unsubscribe(MockEvent, mock_function)
-    assert MockEvent.type.uuid not in event_bus.subscribers
+    event_handler = EventHandler()
+    event_handler.subscribe(MockEvent, mock_function)
+    event_handler.unsubscribe(MockEvent, mock_function)
+    assert MockEvent.type.uuid not in event_handler.subscribers
 
 
 def test_event_handler_bad_unsubscribe():
-    event_bus = EventHandler()
-    event_bus.unsubscribe(MockEvent, mock_function)
+    event_handler = EventHandler()
+    event_handler.unsubscribe(MockEvent, mock_function)
 
 
 def test_event_handler_publish_with_subscribers():
     mock_event = MockEvent()
-    event_bus = EventHandler()
-    event_bus.subscribe(MockEvent, mock_function)
-    event_bus.publish(mock_event)
+    event_handler = EventHandler()
+    event_handler.subscribe(MockEvent, mock_function)
+    event_handler.publish(mock_event)
 
 
 def test_event_handler_publish_without_subscribers():
     mock_event = MockEvent()
-    event_bus = EventHandler()
-    event_bus.publish(mock_event)
+    event_handler = EventHandler()
+    event_handler.publish(mock_event)
 
 
 def test_event_uuid():

@@ -13,8 +13,11 @@ class EventTypeMeta(abc.ABCMeta, type):
         cls.uuid: str = str(uuid.uuid4())
 
 
-class EventType(metaclass=EventTypeMeta):
-    """Abstract class for eny Event type class."""
+class EventType(abc.ABC, metaclass=EventTypeMeta):
+    """Abstract class for any Event type class."""
+
+    name: str
+    uuid: str
 
     @property
     @abc.abstractmethod
