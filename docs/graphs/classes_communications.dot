@@ -1,0 +1,10 @@
+digraph "classes_communications" {
+rankdir=BT
+charset="utf-8"
+"iot_firmware.communications.handler.CommunicationsHandler" [color="black", fontcolor="black", label="{CommunicationsHandler|api_version\l|}", shape="record", style="solid"];
+"iot_firmware.communications.utils.Counter" [color="black", fontcolor="black", label="{Counter|\l|}", shape="record", style="solid"];
+"iot_firmware.communications.schema.Message" [color="black", fontcolor="black", label="{Message|api_version\ldata : _SpecialForm\lid : int\lmsg_id : int\ltimestamp : float\ltype : str\l|load(cls: Dict, message): \l}", shape="record", style="solid"];
+"iot_firmware.communications.schema.Version" [color="black", fontcolor="black", label="{Version|major : int\lminor : int\lpatch : int\l|}", shape="record", style="solid"];
+"iot_firmware.communications.schema.Version" -> "iot_firmware.communications.handler.CommunicationsHandler" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="api_version", style="solid"];
+"iot_firmware.communications.schema.Version" -> "iot_firmware.communications.schema.Message" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="api_version", style="solid"];
+}

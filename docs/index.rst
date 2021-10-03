@@ -8,13 +8,15 @@ Welcome to iot-firmware's documentation!
 
 .. toctree::
     :maxdepth: 1
-    :caption: MODULES
+    :caption: Packages
 
+    iot_firmware
     iot_firmware.event
+    iot_firmware.communications
 
 .. toctree::
     :maxdepth: 1
-    :caption: OTHER
+    :caption: Other
 
     Changelog <CHANGELOG.md>
 

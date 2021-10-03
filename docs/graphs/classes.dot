@@ -1,0 +1,28 @@
+digraph "classes" {
+rankdir=BT
+charset="utf-8"
+"iot_firmware.enums.CommandType" [color="black", fontcolor="black", label="{CommandType|name\l|}", shape="record", style="solid"];
+"iot_firmware.communications.handler.CommunicationsHandler" [color="black", fontcolor="black", label="{CommunicationsHandler|api_version\l|}", shape="record", style="solid"];
+"iot_firmware.communications.utils.Counter" [color="black", fontcolor="black", label="{Counter|\l|}", shape="record", style="solid"];
+"iot_firmware.event.schema.Event" [color="black", fontcolor="black", label="{Event|data : Optional[Any]\llevel\lname : str\ltimestamp : float\ltype\luuid : str\l|}", shape="record", style="solid"];
+"iot_firmware.event.handler.EventHandler" [color="black", fontcolor="black", label="{EventHandler|subscribers : Dict[str, set]\l|publish(event: Event): \lsubscribe(event_class: Type[Event], fn: Callable[[Event], Any]): \lunsubscribe(event_class: Type[Event], fn: Callable[[Event], Any]): \l}", shape="record", style="solid"];
+"iot_firmware.event.enum.EventLevel" [color="black", fontcolor="black", label="{EventLevel|name\l|}", shape="record", style="solid"];
+"iot_firmware.event.schema.EventType" [color="black", fontcolor="black", label="{EventType|name : str\luuid : str\l|}", shape="record", style="solid"];
+"iot_firmware.event.schema.EventTypeMeta" [color="black", fontcolor="black", label="{EventTypeMeta|\l|}", shape="record", style="solid"];
+"iot_firmware.firmware.Firmware" [color="black", fontcolor="black", label="{Firmware|async_tasks\lcommunications_handler\lconfig : NoneType\levent_handler\lfirmware_async_task : NoneType\lrunning : bool\l|firmware_async(): \lstart(): \lstart_async(): \lstop(): \l}", shape="record", style="solid"];
+"iot_firmware.communications.schema.Message" [color="black", fontcolor="black", label="{Message|api_version\ldata : _SpecialForm\lid : int\lmsg_id : int\ltimestamp : float\ltype : str\l|load(cls: Dict, message): \l}", shape="record", style="solid"];
+"iot_firmware.enums.MessageKey" [color="black", fontcolor="black", label="{MessageKey|name\l|}", shape="record", style="solid"];
+"iot_firmware.enums.MessageType" [color="black", fontcolor="black", label="{MessageType|name\l|}", shape="record", style="solid"];
+"iot_firmware.enums.MetaEnum" [color="black", fontcolor="black", label="{MetaEnum|\l|}", shape="record", style="solid"];
+"iot_firmware.enums.StrEnum" [color="black", fontcolor="black", label="{StrEnum|name\l|}", shape="record", style="solid"];
+"iot_firmware.communications.schema.Version" [color="black", fontcolor="black", label="{Version|major : int\lminor : int\lpatch : int\l|}", shape="record", style="solid"];
+"iot_firmware.enums.CommandType" -> "iot_firmware.enums.StrEnum" [arrowhead="empty", arrowtail="none"];
+"iot_firmware.enums.MessageKey" -> "iot_firmware.enums.StrEnum" [arrowhead="empty", arrowtail="none"];
+"iot_firmware.enums.MessageType" -> "iot_firmware.enums.StrEnum" [arrowhead="empty", arrowtail="none"];
+"iot_firmware.communications.handler.CommunicationsHandler" -> "iot_firmware.firmware.Firmware" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="communications_handler", style="solid"];
+"iot_firmware.communications.schema.Version" -> "iot_firmware.communications.handler.CommunicationsHandler" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="api_version", style="solid"];
+"iot_firmware.communications.schema.Version" -> "iot_firmware.communications.schema.Message" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="api_version", style="solid"];
+"iot_firmware.event.enum.EventLevel" -> "iot_firmware.event.schema.Event" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="level", style="solid"];
+"iot_firmware.event.handler.EventHandler" -> "iot_firmware.firmware.Firmware" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="event_handler", style="solid"];
+"iot_firmware.event.schema.EventType" -> "iot_firmware.event.schema.Event" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="type", style="solid"];
+}
