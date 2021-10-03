@@ -12,11 +12,14 @@ All notable changes to this project will be documented in this file.
   - `LICENSE.md`
   - Python package (iot_firmware)
     - `setup.cfg` and `pyproject.toml`
-    - Communications API
-    - CLI
+    - Communications API schema
+    - Sync Event Handler
+    - Docstrings
   - Sphinx Documentation (docs) (with diagrams)
   - Dockerfile
   - Tests (pytest)
+    - docstrings
+    - unittests
   - DevOps files
 - Devops automated tasks
   - CI Tests (GitHub Actions)
