@@ -1,7 +1,6 @@
 import abc
 import time
 import uuid
-from dataclasses import dataclass
 from typing import Any
 
 from .enum import EventLevel
@@ -9,32 +8,31 @@ from .type import EventType
 from iot_firmware.enums import TIME_FORMAT
 
 
-@dataclass
 class Event(abc.ABC):
     """Abstract class for any Event class.
 
-    It contain a custom name and any data as well as a level of an event
-    (default is INFO).
+    Contains a custom name and any data as well as a level of an event.
     """
 
-    data: Any = None
-    level: EventLevel = EventLevel.INFO
+    type: EventType
+    name: str
+    uuid: str
+    timestamp: float
+
+    def __init__(self, data: Any = None, level: EventLevel = EventLevel.INFO) -> None:
+        self.data = data
+        self.level = level
+        self.__post_init__()
 
     @property
     @abc.abstractmethod
     def type(self) -> EventType:
-        """Event Type.
-
-        Must be defined.
-        """
+        """Event Type."""
 
     @property
     @abc.abstractmethod
     def name(self) -> str:
-        """Name of the Event.
-
-        Must be defined.
-        """
+        """Name of the Event."""
 
     def __post_init__(self) -> None:
         """Every event will have a universally unique identifier as well as an

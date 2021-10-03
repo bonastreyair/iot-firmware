@@ -1,28 +1,20 @@
-iot\_firmware.event
+﻿iot\_firmware.event
 ===================
+
+.. currentmodule:: iot_firmware.event
 
 .. graphviz:: graphs/classes_event.dot
 
 |
 
-Classes
--------
+.. autosummary::
+    :toctree: ./generated
 
-.. automodule:: iot_firmware.event.event
-   :members:
-   :undoc-members:
+    iot_firmware.event.event test
+    iot_firmware.event.type
+    iot_firmware.event.handler
+    iot_firmware.event.enum
 
-.. automodule:: iot_firmware.event.type
-   :members:
-   :undoc-members:
-   :exclude-members: EventTypeMeta
-
-Logic
------
-
-.. automodule:: iot_firmware.event.handler
-   :members:
-   :undoc-members:
 
 Diagram
 -------

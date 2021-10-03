@@ -8,13 +8,16 @@ class EventTypeMeta(abc.ABCMeta, type):
     It generates a uuid for each unique event type class.
     """
 
-    def __init__(cls, what, bases, dct):
+    def __init__(cls, what, bases, dct) -> None:
         super().__init__(what, bases, dct)
         cls.uuid: str = str(uuid.uuid4())
 
 
-class EventType(metaclass=EventTypeMeta):
-    """Abstract class for eny Event type class."""
+class EventType(abc.ABC, metaclass=EventTypeMeta):
+    """Abstract class for any Event type class."""
+
+    name: str
+    uuid: str
 
     @property
     @abc.abstractmethod

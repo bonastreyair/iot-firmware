@@ -34,6 +34,8 @@ version = f"{major}.{minor}.{fix}"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.viewcode",
     "sphinx.ext.graphviz",
     "myst_parser",
 ]
@@ -45,6 +47,14 @@ templates_path = ["_templates"]
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
+
+autodoc_default_options = {
+    "members": True,
+    "undoc-members": True,
+}
+
+autosummary_generate = True
+autosummary_generate_overwrite = True
 
 # -- Options for HTML output -------------------------------------------------
 

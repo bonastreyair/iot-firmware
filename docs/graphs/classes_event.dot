@@ -1,21 +1,11 @@
 digraph "classes_event" {
 rankdir=BT
 charset="utf-8"
-"iot_firmware.event.basic.event.CommandEvent" [color="black", fontcolor="black", label="{CommandEvent|name : COMMAND\ltype\l|}", shape="record", style="solid"];
-"iot_firmware.event.basic.type.CommandEventType" [color="black", fontcolor="black", label="{CommandEventType|name : str\l|}", shape="record", style="solid"];
-"iot_firmware.event.event.Event" [color="black", fontcolor="black", label="{Event|data : Optional[Any]\llevel\lname\ltimestamp\ltype\luuid\l|}", shape="record", style="solid"];
-"iot_firmware.event.handler.EventHandler" [color="black", fontcolor="black", label="{EventHandler|subscribers\l|publish(event: Event)\lsubscribe(event: Type[Event], fn: Callable): \lunsubscribe(event: Type[Event], fn: Callable): \l}", shape="record", style="solid"];
+"iot_firmware.event.event.Event" [color="black", fontcolor="black", label="{Event|data : Optional[Any]\llevel\lname : str\ltimestamp : float\ltype\luuid : str\l|}", shape="record", style="solid"];
+"iot_firmware.event.handler.EventHandler" [color="black", fontcolor="black", label="{EventHandler|subscribers : Dict[str, set]\l|publish(event: Event): \lsubscribe(event_class: Type[Event], fn: Callable): \lunsubscribe(event_class: Type[Event], fn: Callable): \l}", shape="record", style="solid"];
 "iot_firmware.event.enum.EventLevel" [color="black", fontcolor="black", label="{EventLevel|name\l|}", shape="record", style="solid"];
-"iot_firmware.event.type.EventType" [color="black", fontcolor="black", label="{EventType|name\l|}", shape="record", style="solid"];
+"iot_firmware.event.type.EventType" [color="black", fontcolor="black", label="{EventType|name : str\luuid : str\l|}", shape="record", style="solid"];
 "iot_firmware.event.type.EventTypeMeta" [color="black", fontcolor="black", label="{EventTypeMeta|\l|}", shape="record", style="solid"];
-"iot_firmware.event.enum.EventTypeName" [color="black", fontcolor="black", label="{EventTypeName|name\l|}", shape="record", style="solid"];
-"iot_firmware.event.basic.event.ReadingEvent" [color="black", fontcolor="black", label="{ReadingEvent|name : READING\ltype\l|}", shape="record", style="solid"];
-"iot_firmware.event.basic.type.ReadingEventType" [color="black", fontcolor="black", label="{ReadingEventType|name : str\l|}", shape="record", style="solid"];
-"iot_firmware.event.basic.event.CommandEvent" -> "iot_firmware.event.event.Event" [arrowhead="empty", arrowtail="none"];
-"iot_firmware.event.basic.event.ReadingEvent" -> "iot_firmware.event.event.Event" [arrowhead="empty", arrowtail="none"];
-"iot_firmware.event.basic.type.CommandEventType" -> "iot_firmware.event.type.EventType" [arrowhead="empty", arrowtail="none"];
-"iot_firmware.event.basic.type.ReadingEventType" -> "iot_firmware.event.type.EventType" [arrowhead="empty", arrowtail="none"];
-"iot_firmware.event.basic.type.CommandEventType" -> "iot_firmware.event.basic.event.CommandEvent" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="type", style="solid"];
-"iot_firmware.event.basic.type.ReadingEventType" -> "iot_firmware.event.basic.event.ReadingEvent" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="type", style="solid"];
 "iot_firmware.event.enum.EventLevel" -> "iot_firmware.event.event.Event" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="level", style="solid"];
+"iot_firmware.event.type.EventType" -> "iot_firmware.event.event.Event" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="type", style="solid"];
 }

@@ -2,16 +2,23 @@ Welcome to iot-firmware's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 1
 
-   Readme <README.md>
+    Readme <README.md>
 
-   iot-firmware <iot_firmware.rst>
+.. toctree::
+    :maxdepth: 1
+    :caption: MODULES
 
-   Changelog <CHANGELOG.md>
+    iot_firmware.event
 
-   License <LICENSE.md>
+.. toctree::
+    :maxdepth: 1
+    :caption: OTHER
+
+    Changelog <CHANGELOG.md>
+
+    License <LICENSE.md>
 
 
 Indices and tables

@@ -9,34 +9,34 @@ from .event import Event
 
 
 class EventHandler:
+    subscribers: Dict[str, set]
+
     def __init__(self) -> None:
-        self.__subscribers: Dict[str, set] = defaultdict(set)
+        self.__subscribers = defaultdict(set)
 
     @property
     def subscribers(self) -> Dict[str, set]:
         """Returns the dict of all the subscribers."""
         return self.__subscribers
 
-    def subscribe(self, event: Type[Event], fn: Callable) -> None:
-        """Subscribes a function to an EventType to be handled by the
-        EventHandler."""
+    def subscribe(self, event_class: Type[Event], fn: Callable) -> None:
+        """Subscribes a function to an EventType."""
         if not isinstance(fn, Callable):
             raise TypeError(f"function {fn} is not Callable")
-        self.__subscribers[event.type.uuid].add(fn)
+        self.__subscribers[event_class.type.uuid].add(fn)
 
-    def unsubscribe(self, event: Type[Event], fn: Callable) -> None:
-        """Unsubscribe a function to an EventType to be handled by the
-        EventHandler."""
-        if event.type.uuid not in self.__subscribers:
-            logging.error(f"event type {event.type.name} was never subscribed")
+    def unsubscribe(self, event_class: Type[Event], fn: Callable) -> None:
+        """Unsubscribes a function to an EventType."""
+        if event_class.type.uuid not in self.__subscribers:
+            logging.error(f"event type {event_class.type.name} was never subscribed")
             return
 
-        self.__subscribers[event.type.uuid].remove(fn)
+        self.__subscribers[event_class.type.uuid].remove(fn)
 
-        if len(self.__subscribers[event.type.uuid]) == 0:
-            del self.__subscribers[event.type.uuid]
+        if len(self.__subscribers[event_class.type.uuid]) == 0:
+            del self.__subscribers[event_class.type.uuid]
 
-    def publish(self, event: Event):
+    def publish(self, event: Event) -> None:
         logging.debug(event)
         if event.type.uuid not in self.__subscribers:
             return
