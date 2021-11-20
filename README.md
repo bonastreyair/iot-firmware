@@ -76,11 +76,11 @@ docker run --rm iot-firmware -h
 ### Python Code
 
 ```python
-from iot_firmware import Firmware
+from iot_firmware import Controller
 
 config = {}
 
-fw = Firmware(config)
+fw = Controller(config)
 fw.start()
 ```
 

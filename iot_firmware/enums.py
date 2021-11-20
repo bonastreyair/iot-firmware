@@ -3,7 +3,7 @@ from enum import EnumMeta
 
 
 class MetaEnum(EnumMeta):
-    def __contains__(cls, item):
+    def __contains__(cls, item) -> bool:
         try:
             cls(item)
         except ValueError:
@@ -12,8 +12,11 @@ class MetaEnum(EnumMeta):
 
 
 class StrEnum(str, Enum, metaclass=MetaEnum):
-    def __str__(self):
-        return "%s" % self.value
+    def __str__(self) -> str:
+        return self.value
+
+    def __repr__(self) -> str:
+        return f"'{self.value}'"
 
 
 class MessageType(StrEnum):

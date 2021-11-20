@@ -4,14 +4,14 @@ from typing import Dict
 from typing import List
 
 import uvloop
+from event import EventHandler
 
 from .communications import CommunicationsHandler
-from .event import EventHandler
 from .schema import read_config
 
 
-class Firmware:
-    """Firmware main application.
+class Controller:
+    """Firmware main controller.
 
     :param config: configuration for the firmware
     """

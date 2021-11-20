@@ -1,4 +1,5 @@
 import uuid
+from typing import Any
 
 import pytest
 
@@ -11,15 +12,21 @@ from mocks.mocks import MockEvent
 from mocks.mocks import MockEventType
 
 
-@pytest.fixture(params=[MockEvent])
-def event(request):
-    return request.param
-
-
-def test_event_handler_subscribe(event):
+def test_event_handler_subscribe_simple_function():
     event_handler = EventHandler()
-    event_handler.subscribe(event, mock_function)
-    assert event.type.uuid in event_handler.subscribers
+    event_handler.subscribe(MockEvent, mock_function)
+    assert MockEvent.type.uuid in event_handler.subscribers
+
+
+def test_event_handler_subscribe_class_function():
+    class Foo:
+        def bar(self, event: MockEvent) -> Any:
+            pass
+
+    foo = Foo()
+    event_handler = EventHandler()
+    event_handler.subscribe(MockEvent, foo.bar)
+    assert MockEvent.type.uuid in event_handler.subscribers
 
 
 def test_event_handler_add_bad_subscription():
@@ -67,16 +74,6 @@ def test_event_level():
     assert mock_event_b.level == EventLevel.ERROR
 
 
-def test_event_name():
-    mock_event = MockEvent()
-    assert mock_event.name == "mock_event"
-
-
-def test_event_type_name():
-    mock_event = MockEvent()
-    assert mock_event.type.name == "mock_event_type"
-
-
 def test_event_data():
     mock_event = MockEvent(data="test")
     assert mock_event.data == "test"
@@ -109,14 +106,11 @@ def test_event_type_class():
 
 def test_event_class():
     class FooEvent(Event):
-        name: str = "foo_event"
         type: EventType = MockEventType
 
     foo = FooEvent()
 
     assert FooEvent.type.uuid is foo.type.uuid
-    assert FooEvent.name is foo.name
-    assert FooEvent.name == "foo_event"
     assert isinstance(foo.uuid, str)
     assert isinstance(foo.timestamp, float)
 
@@ -125,7 +119,6 @@ def test_event_class():
     assert new_foo.uuid != foo.uuid
 
     class BarEvent(Event):
-        name: str = "bar_event"
         type: EventType = MockEventType
 
     bar = BarEvent()
