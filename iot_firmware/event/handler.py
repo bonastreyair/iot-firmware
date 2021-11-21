@@ -6,14 +6,11 @@ from asyncio import queues
 from collections import defaultdict
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Any
 from typing import Callable
 from typing import Dict
 from typing import List
-from typing import overload
 from typing import Type
 
-from .schema import CallableEventFunction
 from .schema import Event
 
 logger = logging.getLogger(__name__)
@@ -35,38 +32,41 @@ class EventHandler:
     defaultdict(<class 'set'>, {})
     """
 
-    num_workers: int = field(init=True, default=4)
-    worker_timeout_seconds: float = field(init=True, default=WORKER_TIMEOUT_SECONDS)
-    buffer_maxsize: int = field(init=True, default=WORKER_TIMEOUT_SECONDS)
+    num_workers: int = field(init=True, repr=True, default=4)
+    worker_timeout_seconds: float = field(
+        init=True, repr=False, default=WORKER_TIMEOUT_SECONDS
+    )
+    buffer_maxsize: int = field(init=True, repr=False, default=WORKER_TIMEOUT_SECONDS)
 
     subscribers: Dict[str, set] = field(
-        init=False, default_factory=lambda: defaultdict(set)
+        init=False, repr=True, default_factory=lambda: defaultdict(set)
     )
-    event_buffer: queues.Queue = field(init=False)
-    workers: List = field(init=False, default_factory=list)
+    event_buffer: queues.Queue = field(init=False, repr=False)
+    workers: List = field(init=False, repr=False, default_factory=list)
 
     def __post_init__(self):
+        """Initialize missing objects after the __init__."""
         self.event_buffer = queues.Queue(maxsize=self.buffer_maxsize)
 
-    def subscribe(self, event_class: Type[Event], fn: CallableEventFunction) -> None:
+    def subscribe(self, event_class: Type[Event], fn: Callable) -> None:
         """Subscribes a function to an EventType.
 
         :param event_class: event class that contains an event type
         :param fn: function that is going to be called with the event object
         """
-        if not isinstance(fn, Callable):
-            raise TypeError(f"function {fn} is not Callable")
+        self._check_types(event_class, fn)
         self.subscribers[event_class.type.uuid].add(fn)
         logger.debug(
             f"function {fn} will be called after every {event_class.type} event"
         )
 
-    def unsubscribe(self, event_class: Type[Event], fn: CallableEventFunction) -> None:
+    def unsubscribe(self, event_class: Type[Event], fn: Callable) -> None:
         """Unsubscribes a function to an EventType.
 
         :param event_class: event class that contains an event type
         :param fn: function that is going to be called with the event object
         """
+        self._check_types(event_class, fn)
         if event_class.type.uuid not in self.subscribers:
             logger.error(f"event type {event_class.type} was never subscribed")
             return
@@ -78,12 +78,14 @@ class EventHandler:
             del self.subscribers[event_class.type.uuid]
             logger.warning(f"event {event_class.type} will not trigger any function")
 
-    @overload
     def publish(self, event: Event) -> None:
         """Adds the event into a queue buffer to be processed.
 
         :param event: standard event inherited from Event class
         """
+        if not isinstance(event, Event):
+            raise TypeError(f"event {event} is not subclassed from Event")
+
         logger.debug(f"event {event} was published")
         if event.type.uuid not in self.subscribers:
             return
@@ -94,12 +96,6 @@ class EventHandler:
 
         self.event_buffer.put_nowait((event, time.time()))
         logger.debug(f"event {event} is pending to be executed")
-
-    def publish(self, event: Any) -> None:
-        """When an unsupported event is using the function publish."""
-        logger.error(
-            f"{type(event)} is not supported by {self.__class__.__name__}, use {Event} events"
-        )
 
     async def worker(self, i) -> None:
         """Calls all subscribed functions with the same event type."""
@@ -182,3 +178,14 @@ class EventHandler:
         for worker in self.workers:
             worker.cancel()
         logger.debug("cancelled all workers")
+
+    @staticmethod
+    def _check_types(event_class: Type[Event], fn: Callable) -> None:
+        """Checks types and raises a TypeError if not correct."""
+        errors = []
+        if not issubclass(event_class, Event):
+            errors.append(f"event class {event_class} is not subclassed from Event")
+        if not isinstance(fn, Callable):
+            errors.append(f"function {fn} is not Callable")
+        if errors:
+            raise TypeError(*errors)

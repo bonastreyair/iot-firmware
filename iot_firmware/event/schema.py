@@ -5,7 +5,6 @@ import uuid
 from dataclasses import dataclass
 from dataclasses import field
 from typing import Any
-from typing import Protocol
 
 from .enum import EventLevel
 
@@ -22,10 +21,8 @@ class EventTypeMeta(type):
         super().__init__(what, bases, dct)
         cls.uuid: str = str(uuid.uuid4())
 
-    def __repr__(cls) -> str:
-        return f"'{cls.__name__}'"
 
-
+@dataclass
 class EventType(metaclass=EventTypeMeta):
     """Abstract class for any Event type class."""
 
@@ -49,9 +46,3 @@ class Event(abc.ABC):
     @abc.abstractmethod
     def type(self) -> EventType:
         """Event Type."""
-
-
-class CallableEventFunction(Protocol):
-    @staticmethod
-    def __call__(event: Event) -> Any:
-        ...

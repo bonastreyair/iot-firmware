@@ -14,3 +14,8 @@ class MockEvent(Event):
 
 def mock_function(event: MockEvent) -> Any:
     pass
+
+
+class MockObject:
+    def mock_function(self, event: MockEvent) -> Any:
+        pass

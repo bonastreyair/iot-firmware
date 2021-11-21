@@ -4,16 +4,16 @@ from typing import Dict
 from typing import List
 
 import uvloop
-from event import EventHandler
 
 from .communications import CommunicationsHandler
+from .event import EventHandler
 from .schema import read_config
 
 
 class Controller:
     """Firmware main controller.
 
-    :param config: configuration for the firmware
+    :param config: configuration for the controller
     """
 
     def __init__(self, config: Dict = None) -> None:

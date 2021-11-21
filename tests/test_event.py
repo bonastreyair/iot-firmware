@@ -10,6 +10,7 @@ from iot_firmware.event.enum import EventLevel
 from mocks.mocks import mock_function
 from mocks.mocks import MockEvent
 from mocks.mocks import MockEventType
+from mocks.mocks import MockObject
 
 
 def test_event_handler_subscribe_simple_function():
@@ -19,20 +20,74 @@ def test_event_handler_subscribe_simple_function():
 
 
 def test_event_handler_subscribe_class_function():
-    class Foo:
-        def bar(self, event: MockEvent) -> Any:
-            pass
-
-    foo = Foo()
     event_handler = EventHandler()
-    event_handler.subscribe(MockEvent, foo.bar)
+    mock_object = MockObject()
+    event_handler.subscribe(MockEvent, mock_object.mock_function)
     assert MockEvent.type.uuid in event_handler.subscribers
 
 
-def test_event_handler_add_bad_subscription():
+def test_event_handler_subscribe_bad_class():
+    event_handler = EventHandler()
+
+    class CustomEvent:
+        pass
+
+    class Foo:
+        def bar(self, event: CustomEvent, what) -> Any:
+            pass
+
+    foo = Foo()
+    with pytest.raises(TypeError):
+        event_handler.subscribe(CustomEvent, foo.bar)
+
+
+def test_event_handler_subscribe_add_bad_fn():
     event_handler = EventHandler()
     with pytest.raises(TypeError):
         event_handler.subscribe(MockEvent, None)
+
+
+def test_event_handler_subscribe_add_bad_class_fn():
+    event_handler = EventHandler()
+
+    class CustomEvent:
+        pass
+
+    with pytest.raises(TypeError):
+        event_handler.unsubscribe(CustomEvent, None)
+
+
+def test_event_handler_unsubscribe_bad_class():
+    event_handler = EventHandler()
+
+    class CustomEvent:
+        pass
+
+    class Foo:
+        def bar(self, event: CustomEvent, what) -> Any:
+            pass
+
+    foo = Foo()
+    with pytest.raises(TypeError):
+        event_handler.subscribe(CustomEvent, foo.bar)
+
+
+def test_event_handler_unsubscribe_add_bad_fn():
+    event_handler = EventHandler()
+    with pytest.raises(TypeError):
+        event_handler.unsubscribe(MockEvent, None)
+
+
+def test_event_handler_unsubscribe_add_bad_class_fn():
+    event_handler = EventHandler()
+
+    class CustomEvent:
+        pass
+
+    with pytest.raises(TypeError) as exc_info:
+        event_handler.unsubscribe(CustomEvent, None)
+
+    assert len(exc_info.value.args) == 2
 
 
 def test_event_handler_unsubscribe():
@@ -42,16 +97,21 @@ def test_event_handler_unsubscribe():
     assert MockEvent.type.uuid not in event_handler.subscribers
 
 
-def test_event_handler_bad_unsubscribe():
-    event_handler = EventHandler()
-    event_handler.unsubscribe(MockEvent, mock_function)
-
-
 def test_event_handler_publish_with_subscribers():
     mock_event = MockEvent()
     event_handler = EventHandler()
     event_handler.subscribe(MockEvent, mock_function)
     event_handler.publish(mock_event)
+
+
+def test_event_handler_publish_no_event():
+    class CustomEvent:
+        pass
+
+    mock_event = CustomEvent()
+    event_handler = EventHandler()
+    with pytest.raises(TypeError):
+        event_handler.publish(mock_event)
 
 
 def test_event_handler_publish_without_subscribers():
@@ -81,12 +141,12 @@ def test_event_data():
 
 def test_print_event():
     mock_event = MockEvent()
-    print(mock_event)
+    assert mock_event.__repr__() == "MockEvent(data=None, level='INFO')"
 
 
 def test_print_event_type():
-    mock_event = MockEvent()
-    print(mock_event.type)
+    mock_event_type = MockEventType()
+    assert mock_event_type.__repr__() == "MockEventType()"
 
 
 def test_event_type_class():
