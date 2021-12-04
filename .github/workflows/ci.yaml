@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: ['3.8', '3.9']
+        python: ['3.8', '3.9', '3.10']
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -34,17 +34,3 @@ jobs:
       uses: codecov/codecov-action@v2.1.0
       with:
         fail_ci_if_error: true
-
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python: ['3.8', '3.9']
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Run build docker image
-      run: |
-        docker build -t iot-firmware --build-arg PYTHON_TAG=${{ matrix.python }}-slim .
-        docker run iot-firmware -v

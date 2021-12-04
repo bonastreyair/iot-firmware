@@ -2,3 +2,5 @@
 from .handler import EventHandler
 from .schema import Event
 from .schema import EventType
+
+EventSystem = EventHandler()

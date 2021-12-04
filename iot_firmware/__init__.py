@@ -1,5 +1,5 @@
 from importlib.metadata import version
 
-from .firmware import Firmware
+from .controller import Controller
 
 __version__ = version(__name__)

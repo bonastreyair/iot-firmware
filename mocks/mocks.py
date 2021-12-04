@@ -1,15 +1,25 @@
+import asyncio
+from typing import Any
+
 from iot_firmware.event import Event
 from iot_firmware.event import EventType
 
 
 class MockEventType(EventType):
-    name: str = "mock_event_type"
+    pass
 
 
 class MockEvent(Event):
-    name: str = "mock_event"
-    type: EventType = MockEventType
+    type = MockEventType
+    data = 0
 
 
-def mock_function(event: MockEvent):
-    pass
+async def mock_function(event: MockEvent) -> Any:
+    await asyncio.sleep(0.1)
+    event.data += 1
+
+
+class MockObject:
+    async def mock_function(self, event: MockEvent) -> Any:
+        await asyncio.sleep(0.1)
+        event.data += 1

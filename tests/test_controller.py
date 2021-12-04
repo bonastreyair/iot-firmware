@@ -1,6 +1,6 @@
 import pytest
 
-from iot_firmware import Firmware
+from iot_firmware import Controller
 
 
 @pytest.fixture(params=[{}, {"mock_config": "mock"}])
@@ -9,7 +9,7 @@ def config(request):
 
 
 def test_firmware_run():
-    fw = Firmware()
+    fw = Controller()
     fw.start()
     with pytest.raises(RuntimeError):
         fw.start()
@@ -17,5 +17,5 @@ def test_firmware_run():
 
 
 def test_firmware_with_config(config):
-    fw = Firmware(config)
+    fw = Controller(config)
     assert fw.config == config

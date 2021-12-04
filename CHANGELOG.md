@@ -13,10 +13,9 @@ All notable changes to this project will be documented in this file.
   - Python package (iot_firmware)
     - `setup.cfg` and `pyproject.toml`
     - Communications API schema
-    - Sync Event Handler
+    - Async Event Handler
     - Docstrings
   - Sphinx Documentation (docs) (with diagrams)
-  - Dockerfile
   - Tests (pytest)
     - docstrings
     - unittests

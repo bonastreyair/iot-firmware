@@ -10,10 +10,10 @@ from .event import EventHandler
 from .schema import read_config
 
 
-class Firmware:
-    """Firmware main application.
+class Controller:
+    """Firmware main controller.
 
-    :param config: configuration for the firmware
+    :param config: configuration for the controller
     """
 
     def __init__(self, config: Dict = None) -> None:
