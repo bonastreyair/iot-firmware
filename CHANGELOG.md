@@ -16,7 +16,6 @@ All notable changes to this project will be documented in this file.
     - Sync Event Handler
     - Docstrings
   - Sphinx Documentation (docs) (with diagrams)
-  - Dockerfile
   - Tests (pytest)
     - docstrings
     - unittests

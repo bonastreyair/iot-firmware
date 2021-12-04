@@ -39,14 +39,6 @@ It is required to clone the repo and then install from local.
 pip install .
 ```
 
-### Docker Image (Python based)
-
-A docker image is also available, for a `Python 3.8-slim` execution you can just run:
-
-```text
-docker build -t iot-firmware --build-arg PYTHON_TAG=3.8-slim .
-```
-
 ## Usage
 
 ### CLI - Command-line Interface
@@ -63,14 +55,6 @@ optional arguments:
   -v, --version         show program's version number and exit
   -c CONFIG, --config CONFIG
                         path to the configuration
-```
-
-### Docker Image
-
-It is also available using Docker.
-
-```sh
-docker run --rm iot-firmware -h
 ```
 
 ### Python Code
