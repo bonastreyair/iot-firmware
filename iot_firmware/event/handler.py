@@ -112,6 +112,7 @@ class EventHandler:
         logger.debug(f"event `{event}` is the buffer, pending to be executed")
 
     async def run(self):
+        """Main function that starts workers to handle event requests."""
         self._workers = [
             asyncio.create_task(self._worker(i), name=f"worker_{i}")
             for i in range(self.num_workers)
@@ -142,7 +143,10 @@ class EventHandler:
         logger.debug("cancelled all workers")
 
     async def _worker(self, i: int) -> None:
-        """Calls all subscribed functions with the same event type."""
+        """Calls all subscribed functions with the same event type.
+
+        :param i: unique id number of the worker
+        """
         event = await self._get_next_event()
         while event is not PoisonPill:
             tasks = [
@@ -164,6 +168,14 @@ class EventHandler:
 
     @staticmethod
     async def _run_tasks(tasks: List, event: Event) -> None:
+        """Function that runs various tasks with the event.
+
+        It is in charge of scheduling them in the async event loop.
+        It also captures and logs any errors that might appear during their executions.
+
+        :param tasks: list of async tasks that are going to be executed
+        :param event: standard event inherited from Event class
+        """
         logger.debug(
             f"awaiting for {[task.get_name() for task in tasks]} triggered by `{event}`"
         )
@@ -183,6 +195,7 @@ class EventHandler:
                 )
 
     def _discard_oldest_event(self) -> None:
+        """Discards the oldest event in the event buffer."""
         event, entered_in_buffer = self._event_buffer.get_nowait()
         t = time.time()
         logger.error(
@@ -191,6 +204,11 @@ class EventHandler:
         )
 
     async def _get_next_event(self) -> Event:
+        """Gets next event from the event buffer.
+
+        It also logs the amount of time the event has been waiting in
+        the buffer.
+        """
         event, entered_in_buffer = await self._event_buffer.get()
         t = time.time()
         logger.debug(
@@ -200,7 +218,10 @@ class EventHandler:
 
     @staticmethod
     def _check_types(event_class: Type[Event], fn: Callable) -> None:
-        """Checks types and raises a TypeError if not correct."""
+        """Checks types and raises a TypeError if not correct.
+
+        :param event_class: standard event class inherited from Event class
+        """
         errors = []
         if not issubclass(event_class, Event):
             errors.append(f"event class {event_class} is not subclassed from Event")
@@ -212,6 +233,10 @@ class EventHandler:
             raise TypeError(*errors)
 
     def _discard_event(self, event: Any) -> bool:
+        """Checks whether the event must be discarded or not.
+
+        :param event: standard event inherited from Event class
+        """
         if not isinstance(event, Event):
             logger.error(f"discarded event `{event}` -> not subclassed from Event")
             return True
@@ -231,4 +256,6 @@ class MetaPoisonPill(type):
 
 
 class PoisonPill(metaclass=MetaPoisonPill):
+    """Poison pill used to stop the workers gracefully."""
+
     pass

@@ -10,9 +10,9 @@ from .enum import EventLevel
 
 
 class EventTypeMeta(type):
-    """Meta class for event types.
+    """Metaclass for event types.
 
-    It generates a uuid for each unique event type class.
+    It generates an uuid for each unique event type class.
     """
 
     uuid: str
