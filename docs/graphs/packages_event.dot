@@ -7,7 +7,7 @@ charset="utf-8"
 "iot_firmware.event.schema" [color="black", label="iot_firmware.event.schema", shape="box", style="solid"];
 "iot_firmware.event" -> "iot_firmware.event.handler" [arrowhead="open", arrowtail="none"];
 "iot_firmware.event" -> "iot_firmware.event.schema" [arrowhead="open", arrowtail="none"];
-"iot_firmware.event.enum" -> "iot_firmware.event.enum" [arrowhead="open", arrowtail="none"];
+"iot_firmware.event.handler" -> "iot_firmware.event.enum" [arrowhead="open", arrowtail="none"];
 "iot_firmware.event.handler" -> "iot_firmware.event.schema" [arrowhead="open", arrowtail="none"];
 "iot_firmware.event.schema" -> "iot_firmware.event.enum" [arrowhead="open", arrowtail="none"];
 }

@@ -10,9 +10,9 @@ Welcome to iot-firmware's documentation!
     :maxdepth: 1
     :caption: Packages
 
-    iot_firmware
-    iot_firmware.event
-    iot_firmware.communications
+    Firmware<iot_firmware>
+    Event<iot_firmware.event>
+    Communications<iot_firmware.communications>
 
 .. toctree::
     :maxdepth: 1
