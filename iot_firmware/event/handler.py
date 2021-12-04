@@ -1,22 +1,26 @@
 """Module in charge of handling function event subscriptions."""
 import asyncio
+import inspect
 import logging
 import time
 from asyncio import queues
 from collections import defaultdict
 from dataclasses import dataclass
 from dataclasses import field
+from typing import Any
 from typing import Callable
 from typing import Dict
 from typing import List
 from typing import Type
 
+from .enum import EventHandlerState
 from .schema import Event
 
 logger = logging.getLogger(__name__)
 
-MAX_BUFFERED_EVENTS = 100
-WORKER_TIMEOUT_SECONDS = 5
+DEFAULT_NUM_WORKERS = 10
+DEFAULT_BUFFER_MAXSIZE = 100
+DEFAULT_WORKER_TIMEOUT_SECONDS = 2
 
 
 @dataclass
@@ -28,25 +32,28 @@ class EventHandler:
     Basic usage.
 
     >>> event_handler = EventHandler()
-    >>> event_handler.subscribers
-    defaultdict(<class 'set'>, {})
+    >>> event_handler.state.name
+    'IDLE'
     """
 
-    num_workers: int = field(init=True, repr=True, default=4)
+    num_workers: int = field(default=DEFAULT_NUM_WORKERS)
+    buffer_maxsize: int = field(repr=False, default=DEFAULT_BUFFER_MAXSIZE)
     worker_timeout_seconds: float = field(
-        init=True, repr=False, default=WORKER_TIMEOUT_SECONDS
+        repr=False, default=DEFAULT_WORKER_TIMEOUT_SECONDS
     )
-    buffer_maxsize: int = field(init=True, repr=False, default=WORKER_TIMEOUT_SECONDS)
 
-    subscribers: Dict[str, set] = field(
-        init=False, repr=True, default_factory=lambda: defaultdict(set)
+    state: EventHandlerState = field(repr=False, default=EventHandlerState.IDLE)
+
+    _subscribers: Dict[str, set] = field(
+        init=False, repr=False, default_factory=lambda: defaultdict(set)
     )
-    event_buffer: queues.Queue = field(init=False, repr=False)
-    workers: List = field(init=False, repr=False, default_factory=list)
+    _workers: List = field(init=False, repr=False, default_factory=list)
+    _event_buffer: queues.Queue = field(init=False, repr=False)
 
     def __post_init__(self):
         """Initialize missing objects after the __init__."""
-        self.event_buffer = queues.Queue(maxsize=self.buffer_maxsize)
+        self._event_buffer = queues.Queue(maxsize=self.buffer_maxsize)
+        logger.debug(self.state.name)
 
     def subscribe(self, event_class: Type[Event], fn: Callable) -> None:
         """Subscribes a function to an EventType.
@@ -55,9 +62,10 @@ class EventHandler:
         :param fn: function that is going to be called with the event object
         """
         self._check_types(event_class, fn)
-        self.subscribers[event_class.type.uuid].add(fn)
+        self._subscribers[event_class.type.uuid].add(fn)
         logger.debug(
-            f"function {fn} will be called after every {event_class.type} event"
+            f"subscribed async function `{fn.__name__}` "
+            f"after every `{event_class.type.__name__}` event"
         )
 
     def unsubscribe(self, event_class: Type[Event], fn: Callable) -> None:
@@ -67,65 +75,98 @@ class EventHandler:
         :param fn: function that is going to be called with the event object
         """
         self._check_types(event_class, fn)
-        if event_class.type.uuid not in self.subscribers:
-            logger.error(f"event type {event_class.type} was never subscribed")
+        if event_class.type.uuid not in self._subscribers:
+            logger.error(f"event type {event_class.type.__name__} was never subscribed")
             return
 
-        self.subscribers[event_class.type.uuid].remove(fn)
-        logger.debug(f"event {event_class.type} will no longer trigger function: {fn}")
+        self._subscribers[event_class.type.uuid].remove(fn)
+        logger.debug(
+            f"unsubscribed {fn.__name__} after every `{event_class.type.__name__}` event"
+        )
 
-        if len(self.subscribers[event_class.type.uuid]) == 0:
-            del self.subscribers[event_class.type.uuid]
-            logger.warning(f"event {event_class.type} will not trigger any function")
+        if len(self._subscribers[event_class.type.uuid]) == 0:
+            del self._subscribers[event_class.type.uuid]
+            logger.warning(
+                f"event {event_class.type.__name__} will not trigger any function"
+            )
 
     def publish(self, event: Event) -> None:
         """Adds the event into a queue buffer to be processed.
 
         :param event: standard event inherited from Event class
         """
-        if not isinstance(event, Event):
-            raise TypeError(f"event {event} is not subclassed from Event")
-
-        logger.debug(f"event {event} was published")
-        if event.type.uuid not in self.subscribers:
+        if self._discard_event(event):
             return
 
-        if self.event_buffer.full():
-            logger.error("event_buffer is full")
-            event = self.get_next_event_nowait()
+        if self.state is EventHandlerState.IDLE:
+            logger.warning(
+                f"handler is in {self.state.name} state, but it will be stored in the buffer"
+            )
 
-        self.event_buffer.put_nowait((event, time.time()))
-        logger.debug(f"event {event} is pending to be executed")
+        logger.debug(f"event `{event}` was published")
+        if self._event_buffer.full():
+            logger.warning(f"buffer is full (events:{self._event_buffer.qsize()})")
+            self._discard_oldest_event()
 
-    async def worker(self, i) -> None:
+        self._event_buffer.put_nowait((event, time.time()))
+        logger.debug(f"event `{event}` is the buffer, pending to be executed")
+
+    async def run(self):
+        self._workers = [
+            asyncio.create_task(self._worker(i), name=f"worker_{i}")
+            for i in range(self.num_workers)
+        ]
+        self.state = EventHandlerState.RUNNING
+        logger.info(self.state.name)
+        await asyncio.gather(*self._workers, return_exceptions=True)
+        self._workers = []
+        self.state = EventHandlerState.IDLE
+        logger.debug(self.state.name)
+
+    async def stop(self) -> None:
+        """Send poison pills to all workers."""
+        if self.state is not EventHandlerState.RUNNING:
+            raise RuntimeError("event handler is not running")
+        self.state = EventHandlerState.STOPPING
+        logger.debug(self.state.name)
+        for _ in self._workers:
+            await self._event_buffer.put((PoisonPill, time.time()))
+
+    def cancel(self) -> None:
+        """Cancels all workers."""
+        if self.state is not EventHandlerState.RUNNING:
+            raise RuntimeError("event handler is not running")
+        logger.debug("cancelling all workers")
+        for worker in self._workers:
+            worker.cancel()
+        logger.debug("cancelled all workers")
+
+    async def _worker(self, i: int) -> None:
         """Calls all subscribed functions with the same event type."""
-        while event := await self.get_next_event():
+        event = await self._get_next_event()
+        while event is not PoisonPill:
             tasks = [
                 asyncio.create_task(fn(event), name=fn.__name__)
-                for fn in self.subscribers[event.type.uuid]
+                for fn in self._subscribers[event.type.uuid]
             ]
-
             try:
-                logger.debug(f"processing {len(tasks)} tasks")
                 await asyncio.wait_for(
-                    self.run_tasks(tasks, event), timeout=WORKER_TIMEOUT_SECONDS
+                    self._run_tasks(tasks, event), timeout=self.worker_timeout_seconds
                 )
             except asyncio.TimeoutError:
                 logger.error(
-                    f"exceeded max event {event} computation time of {WORKER_TIMEOUT_SECONDS}s"
+                    f"exceeded max computation time of {self.worker_timeout_seconds}s for `{event}`"
                 )
             t = time.time()
-            logger.debug(f"{event} execution latency: {t - event.timestamp}s)")
-            for task in tasks:
-                if task.cancelled():
-                    logger.debug(
-                        f"task {task.get_name()} was cancelled since it lasted more than 3 seconds"
-                    )
-        logger.info(f"worker {i} has stopped after a poison pill")
+            logger.debug(f"worker {i} processing latency: {t - event.timestamp:.3f}s")
+            event = await self._get_next_event()
+        logger.info(f"worker {i} stopped")
 
     @staticmethod
-    async def run_tasks(tasks: List, event: Event) -> None:
-        logger.info(f"awaiting for {len(tasks)} tasks")
+    async def _run_tasks(tasks: List, event: Event) -> None:
+        logger.debug(
+            f"awaiting for {[task.get_name() for task in tasks]} triggered by `{event}`"
+        )
         try:
             await asyncio.gather(*tasks, return_exceptions=True)
         except asyncio.CancelledError:
@@ -133,51 +174,29 @@ class EventHandler:
             logger.warning(f"gather cancelled {len(cancelled_tasks)} task(s)")
 
         for task in tasks:
-            if not task.cancelled and task.exception():
+            if task.cancelled():
+                logger.warning(f"task `{task.get_name()}` was cancelled")
+            if not task.cancelled() and task.exception():
                 logger.error(
-                    f"error during task {task.get_coro()} after {event} event "
+                    f"error captured in `{task.get_coro().__name__}` after `{event}` "
                     f"- {task.exception().__class__.__name__}: {task.exception()}"
                 )
 
-    def get_next_event_nowait(self) -> Event:
-        event, entered_in_buffer = self.event_buffer.get_nowait()
+    def _discard_oldest_event(self) -> None:
+        event, entered_in_buffer = self._event_buffer.get_nowait()
         t = time.time()
         logger.error(
-            f"event {event} was lost (in buffer time {t - entered_in_buffer:.3f}s)"
+            f"event `{event}` was discarded "
+            f"(in buffer time {t - entered_in_buffer:.3f}s)"
+        )
+
+    async def _get_next_event(self) -> Event:
+        event, entered_in_buffer = await self._event_buffer.get()
+        t = time.time()
+        logger.debug(
+            f"event `{event}` has been in buffer for {t - entered_in_buffer:.3f}s"
         )
         return event
-
-    async def get_next_event(self) -> Event:
-        event, entered_in_buffer = await self.event_buffer.get()
-        t = time.time()
-        logger.debug(f"time in buffer {t - entered_in_buffer}")
-        return event
-
-    async def run(self):
-        self.workers = [
-            asyncio.create_task(self.worker(i), name=f"worker_{i}")
-            for i in range(self.num_workers)
-        ]
-        logger.info(f"running {self.__name__}")
-        try:
-            await asyncio.gather(*self.workers)
-        except asyncio.CancelledError:
-            logger.debug("workers were cancelled")
-        logger.info(f"finished {self.__name__}")
-
-    async def stop(self) -> None:
-        """Send poison pills to all workers."""
-        logger.debug("stopping all workers")
-        for _ in self.workers:
-            await self.event_buffer.put(None)
-        logger.debug("stopped all workers")
-
-    async def cancel(self) -> None:
-        """Cancels all workers."""
-        logger.debug("cancelling all workers")
-        for worker in self.workers:
-            worker.cancel()
-        logger.debug("cancelled all workers")
 
     @staticmethod
     def _check_types(event_class: Type[Event], fn: Callable) -> None:
@@ -187,5 +206,29 @@ class EventHandler:
             errors.append(f"event class {event_class} is not subclassed from Event")
         if not isinstance(fn, Callable):
             errors.append(f"function {fn} is not Callable")
+        if not inspect.iscoroutinefunction(fn):
+            errors.append(f"function {fn} is not async")
         if errors:
             raise TypeError(*errors)
+
+    def _discard_event(self, event: Any) -> bool:
+        if not isinstance(event, Event):
+            logger.error(f"discarded event `{event}` -> not subclassed from Event")
+            return True
+        if event.type.uuid not in self._subscribers:
+            logger.debug(f"discarded event `{event}` -> there were no subscribers")
+            return True
+        if self.state is EventHandlerState.STOPPING:
+            logger.warning(f"discarded event `{event}` -> state is {self.state.name}")
+            return True
+
+        return False
+
+
+class MetaPoisonPill(type):
+    def __repr__(self) -> str:
+        return self.__name__
+
+
+class PoisonPill(metaclass=MetaPoisonPill):
+    pass
