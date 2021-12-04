@@ -7,7 +7,7 @@ charset="utf-8"
 "iot_firmware.communications.utils.Counter" [color="black", fontcolor="black", label="{Counter|\l|}", shape="record", style="solid"];
 "iot_firmware.event.schema.Event" [color="black", fontcolor="black", label="{Event|data : Optional[Any]\llevel\ltimestamp : float\ltype\luuid : str\l|}", shape="record", style="solid"];
 "iot_firmware.event.handler.EventHandler" [color="black", fontcolor="black", label="{EventHandler|buffer_maxsize : int\lnum_workers : int\lstate\lworker_timeout_seconds : float\l|cancel(): \lpublish(event: Event): \lrun()\lstop(): \lsubscribe(event_class: Type[Event], fn: Callable): \lunsubscribe(event_class: Type[Event], fn: Callable): \l}", shape="record", style="solid"];
-"iot_firmware.event.handler.EventHandlerState" [color="black", fontcolor="black", label="{EventHandlerState|name\l|}", shape="record", style="solid"];
+"iot_firmware.event.enum.EventHandlerState" [color="black", fontcolor="black", label="{EventHandlerState|name\l|}", shape="record", style="solid"];
 "iot_firmware.event.enum.EventLevel" [color="black", fontcolor="black", label="{EventLevel|name\l|}", shape="record", style="solid"];
 "iot_firmware.event.schema.EventType" [color="black", fontcolor="black", label="{EventType|\l|}", shape="record", style="solid"];
 "iot_firmware.event.schema.EventTypeMeta" [color="black", fontcolor="black", label="{EventTypeMeta|\l|}", shape="record", style="solid"];
@@ -26,7 +26,7 @@ charset="utf-8"
 "iot_firmware.communications.handler.CommunicationsHandler" -> "iot_firmware.controller.Controller" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="communications_handler", style="solid"];
 "iot_firmware.communications.schema.Version" -> "iot_firmware.communications.handler.CommunicationsHandler" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="api_version", style="solid"];
 "iot_firmware.communications.schema.Version" -> "iot_firmware.communications.schema.Message" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="api_version", style="solid"];
+"iot_firmware.event.enum.EventHandlerState" -> "iot_firmware.event.handler.EventHandler" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="state", style="solid"];
 "iot_firmware.event.enum.EventLevel" -> "iot_firmware.event.schema.Event" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="level", style="solid"];
 "iot_firmware.event.handler.EventHandler" -> "iot_firmware.controller.Controller" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="event_handler", style="solid"];
-"iot_firmware.event.handler.EventHandlerState" -> "iot_firmware.event.handler.EventHandler" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="state", style="solid"];
 }
