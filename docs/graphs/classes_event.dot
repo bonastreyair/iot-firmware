@@ -7,7 +7,6 @@ charset="utf-8"
 "iot_firmware.event.enum.EventLevel" [color="black", fontcolor="black", label="{EventLevel|name\l|}", shape="record", style="solid"];
 "iot_firmware.event.schema.EventType" [color="black", fontcolor="black", label="{EventType|\l|}", shape="record", style="solid"];
 "iot_firmware.event.schema.EventTypeMeta" [color="black", fontcolor="black", label="{EventTypeMeta|\l|}", shape="record", style="solid"];
-"iot_firmware.event.handler.MetaPoisonPill" [color="black", fontcolor="black", label="{MetaPoisonPill|\l|}", shape="record", style="solid"];
 "iot_firmware.event.handler.PoisonPill" [color="black", fontcolor="black", label="{PoisonPill|\l|}", shape="record", style="solid"];
 "iot_firmware.event.enum.EventHandlerState" -> "iot_firmware.event.handler.EventHandler" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="state", style="solid"];
 "iot_firmware.event.enum.EventLevel" -> "iot_firmware.event.schema.Event" [arrowhead="diamond", arrowtail="none", fontcolor="green", label="level", style="solid"];

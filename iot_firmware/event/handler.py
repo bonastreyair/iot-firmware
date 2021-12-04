@@ -13,6 +13,7 @@ from typing import Dict
 from typing import List
 from typing import Type
 
+from ..enums import NameClassMeta
 from .enum import EventHandlerState
 from .schema import Event
 
@@ -250,12 +251,5 @@ class EventHandler:
         return False
 
 
-class MetaPoisonPill(type):
-    def __repr__(self) -> str:
-        return self.__name__
-
-
-class PoisonPill(metaclass=MetaPoisonPill):
+class PoisonPill(metaclass=NameClassMeta):
     """Poison pill used to stop the workers gracefully."""
-
-    pass

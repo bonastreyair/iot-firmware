@@ -2,7 +2,12 @@ from enum import Enum
 from enum import EnumMeta
 
 
-class MetaEnum(EnumMeta):
+class NameClassMeta(type):
+    def __repr__(self) -> str:
+        return self.__name__
+
+
+class ContainsEnumMeta(EnumMeta):
     def __contains__(cls, item) -> bool:
         try:
             cls(item)
@@ -11,7 +16,7 @@ class MetaEnum(EnumMeta):
         return True
 
 
-class StrEnum(str, Enum, metaclass=MetaEnum):
+class StrEnum(str, Enum, metaclass=ContainsEnumMeta):
     def __str__(self) -> str:
         return self.value
 
