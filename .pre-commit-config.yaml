@@ -27,7 +27,7 @@ repos:
   - id: reorder-python-imports
     args: [--py3-plus]
 - repo: https://github.com/psf/black
-  rev: 21.11b1
+  rev: 21.12b0
   hooks:
   - id: black
     language_version: python3
@@ -50,7 +50,7 @@ repos:
   - id: yamlfmt
     args: [--mapping, '2', --sequence, '2', --offset, '0']
 - repo: https://github.com/executablebooks/mdformat
-  rev: 0.7.10
+  rev: 0.7.11
   hooks:
   - id: mdformat
     name: Format Markdown files
